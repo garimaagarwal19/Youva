@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "727460680079",
+    "firebase_url": "https://youva-226206.firebaseio.com",
+    "project_id": "youva-226206",
+    "storage_bucket": "youva-226206.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727460680079:android:b29b3a504fd9aa3d",
+        "android_client_info": {
+          "package_name": "com.decurtis.youva"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727460680079-8ebnnosjpg6rn7tv67ng5c60ns1iiv44.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.decurtis.youva",
+            "certificate_hash": "66ecf590f5b77e895c29726a74ca79efe8638c76"
+          }
+        },
+        {
+          "client_id": "727460680079-6tvdvkfbqotv1n8hr8ugb3e5t6hfou88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqODjPvxrTvuHNFJZtWIVh9xmFtU3z-Hs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727460680079-6tvdvkfbqotv1n8hr8ugb3e5t6hfou88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
