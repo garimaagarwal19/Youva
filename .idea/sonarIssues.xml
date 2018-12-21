@@ -3,12 +3,12 @@
   <component name="issues">
     <option name="index">
       <map>
-        <entry key="/Dummy.txt">
+        <entry key="$PROJECT_DIR$/app/build.gradle">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/build.gradle">
+        <entry key="$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <value>
             <set />
           </value>
@@ -23,7 +23,7 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/UserFragment.java">
           <value>
             <set />
           </value>
@@ -33,7 +33,17 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/userfragment.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/build.gradle">
           <value>
             <set />
           </value>

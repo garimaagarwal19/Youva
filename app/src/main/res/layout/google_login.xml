@@ -23,7 +23,7 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline_middle"
-        android:background="#676b7e"/>
+        android:background="#465A65"/>
 
     <ImageView
         android:id="@+id/img_google_logo"
@@ -54,7 +54,7 @@
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview1"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:text="Quickstart"
         android:textSize="30dp"
         android:textColor="@android:color/white"/>
@@ -66,7 +66,7 @@
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview2"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="9dp"
         android:text="Signed out"
         android:textSize="15dp"
         android:textColor="@android:color/white"/>
@@ -76,7 +76,7 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/guideline_middle"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#4b5b6d"/>
+        android:background="#273238"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_button"
@@ -86,7 +86,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
-        android:background="@android:color/white"
         android:text="Sign in"/>
 
 </android.support.constraint.ConstraintLayout>
