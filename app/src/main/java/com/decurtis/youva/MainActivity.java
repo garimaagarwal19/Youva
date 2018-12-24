@@ -2,11 +2,9 @@ package com.decurtis.youva;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.FrameLayout;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         //TODO : Need to do corrections here
         Bundle bundle = new Bundle();
         bundle.putString("name" , name);
-        UserFragment userFragment = new UserFragment();
-        userFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, userFragment).commit();
+        ModeSelectionFragment modeSelectionFragment = new ModeSelectionFragment();
+        modeSelectionFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, modeSelectionFragment).commit();
     }
 
     @Override
