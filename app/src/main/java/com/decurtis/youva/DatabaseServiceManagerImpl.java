@@ -3,6 +3,7 @@ package com.decurtis.youva;
 import com.decurtis.youva.model.UserDeails;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
 
@@ -24,6 +25,6 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
 
     @Override
     public void saveUserBasicData(UserDeails userDeails) {
-        mFireBaseDatabaseUserReference.child(userDeails.getEmail()).setValue(userDeails);
+        mFireBaseDatabaseUserReference.child(userDeails.getKey()).setValue(userDeails);
     }
 }

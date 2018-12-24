@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     String photoUrl = String.valueOf(account.getPhotoUrl());
                     addUserFragment(fullName);
 
-                    saveDataToDatabase(fullName, email, photoUrl);
+                    saveDataToDatabase(fullName, email, photoUrl, id);
 
                 } catch (ApiException e) {
                     e.printStackTrace();
@@ -73,12 +73,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveDataToDatabase(String fullName, String email, String photoUrl) {
+    private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
         UserDeails userDeails = new UserDeails();
         userDeails.setEmail(email);
         if(photoUrl != null && photoUrl.length() > 0)
             userDeails.setImageURL(photoUrl);
         userDeails.setName(fullName);
+        userDeails.setKey(id);
         ServiceFactory.getDatabaseManager().saveUserBasicData(userDeails);
     }
 }

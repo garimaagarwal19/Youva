@@ -9,8 +9,9 @@ public class UserDeails {
     private String imageURL;
     private String address;
     private String email;
-    private ArrayList<String> individualInterest;
-    private ArrayList<String> businessInterest;
+    private String key;
+    private ArrayList<String> individualInterest = new ArrayList<>();
+    private ArrayList<String> businessInterest = new ArrayList<>();
     private int latitude;
     private int longitude;
 
@@ -19,6 +20,7 @@ public class UserDeails {
                       String imageURL,
                       String address,
                       String email,
+                      String key,
                       ArrayList<String> individualInterest,
                       ArrayList<String> businessInterest,
                       int latitude,
@@ -28,6 +30,7 @@ public class UserDeails {
         this.imageURL = imageURL;
         this.address = address;
         this.email = email;
+        this.key = key;
         this.individualInterest = individualInterest;
         this.businessInterest = businessInterest;
         this.latitude = latitude;
@@ -58,6 +61,10 @@ public class UserDeails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public ArrayList<String> getIndividualInterest() {
@@ -94,6 +101,10 @@ public class UserDeails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setIndividualInterest(ArrayList<String> individualInterest) {
