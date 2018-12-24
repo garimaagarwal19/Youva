@@ -8,18 +8,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
 
+import com.decurtis.youva.model.UserDeails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addLoginFragment();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     private void addLoginFragment() {
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
                     String id = account.getId();
                     String photoUrl = String.valueOf(account.getPhotoUrl());
                     addUserFragment(fullName);
+
+                    saveDataToDatabase(fullName, email, photoUrl);
+
                 } catch (ApiException e) {
                     e.printStackTrace();
                 }
@@ -62,5 +71,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.e("Error : " , "Error While Google Login");
         }
+    }
+
+    private void saveDataToDatabase(String fullName, String email, String photoUrl) {
+        UserDeails userDeails = new UserDeails();
+        userDeails.setEmail(email);
+        if(photoUrl != null && photoUrl.length() > 0)
+            userDeails.setImageURL(photoUrl);
+        userDeails.setName(fullName);
+        ServiceFactory.getDatabaseManager().saveUserBasicData(userDeails);
     }
 }
