@@ -8,7 +8,8 @@ import android.content.SharedPreferences;
  */
 public class SharedPrefManager {
     private static final String SHARED_PREFERENCES_NAME = "youva";
-    private static final String APP_MODE = "App_Mode";
+    private static final String APP_MODE = "AppMode";
+    private static final String ACCOUNT_ID = "AccountID";
 
     private static SharedPreferences mSharedPreference;
     private static SharedPrefManager mInstance;
@@ -34,5 +35,15 @@ public class SharedPrefManager {
 
     public int getAppMode() {
         return mSharedPreference.getInt(APP_MODE, AppMode.DEFAULT.getValue());
+    }
+
+    public void setLoggedInAccountKey(String value) {
+        SharedPreferences.Editor editor = mSharedPreference.edit();
+        editor.putString(ACCOUNT_ID, value);
+        editor.commit();
+    }
+
+    public String getLoggedInAccountKey() {
+        return mSharedPreference.getString(ACCOUNT_ID, null);
     }
 }

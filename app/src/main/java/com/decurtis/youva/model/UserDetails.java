@@ -2,7 +2,7 @@ package com.decurtis.youva.model;
 
 import java.util.ArrayList;
 
-public class UserDeails {
+public class UserDetails {
 
     private String name;
     private String type;
@@ -15,16 +15,16 @@ public class UserDeails {
     private int latitude;
     private int longitude;
 
-    public UserDeails(String name,
-                      String type,
-                      String imageURL,
-                      String address,
-                      String email,
-                      String key,
-                      ArrayList<String> individualInterest,
-                      ArrayList<String> businessInterest,
-                      int latitude,
-                      int longitude) {
+    public UserDetails(String name,
+                       String type,
+                       String imageURL,
+                       String address,
+                       String email,
+                       String key,
+                       ArrayList<String> individualInterest,
+                       ArrayList<String> businessInterest,
+                       int latitude,
+                       int longitude) {
         this.name = name;
         this.type = type;
         this.imageURL = imageURL;
@@ -37,7 +37,7 @@ public class UserDeails {
         this.longitude = longitude;
     }
 
-    public UserDeails() {
+    public UserDetails() {
         /*
          * Empty constructor
          * */

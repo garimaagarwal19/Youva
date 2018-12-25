@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
-import com.decurtis.youva.model.UserDeails;
+import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        int appMode = SharedPrefManager.getInstance(getApplicationContext()).getAppMode();
+        int appMode = ServiceFactory.getSharedPreferences().getAppMode();
 //        if(appMode == 0)
 //            mLogoutText.setVisibility(View.GONE);
 //        else
@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     String photoUrl = String.valueOf(account.getPhotoUrl());
                     addModeSelectionFragment(fullName);
 
+                    ServiceFactory.getSharedPreferences().setLoggedInAccountKey(id);
+                   // SharedPrefManager.getInstance(getApplicationContext()).setLoggedInAccountKey(id);
                     saveDataToDatabase(fullName, email, photoUrl, id);
 
                 } catch (ApiException e) {
@@ -111,13 +113,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
-        UserDeails userDeails = new UserDeails();
-        userDeails.setEmail(email);
+        UserDetails userDetails = new UserDetails();
+        userDetails.setEmail(email);
         if (photoUrl != null && photoUrl.length() > 0)
-            userDeails.setImageURL(photoUrl);
-        userDeails.setName(fullName);
-        userDeails.setKey(id);
-        ServiceFactory.getDatabaseManager().saveUserBasicData(userDeails);
+            userDetails.setImageURL(photoUrl);
+        userDetails.setName(fullName);
+        userDetails.setKey(id);
+        ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
     }
 
     public void showToolbar(boolean needToShow) {

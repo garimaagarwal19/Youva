@@ -1,8 +1,10 @@
 package com.decurtis.youva;
 
-import com.decurtis.youva.model.UserDeails;
+import com.decurtis.youva.model.UserDetails;
 
 public interface DatabaseServiceManager {
 
-    void saveUserBasicData(UserDeails userDeails);
+    void saveUserBasicData(UserDetails userDetails);
+
+    UserDetails getLoggedInAccount(String accountId);
 }

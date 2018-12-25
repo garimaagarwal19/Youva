@@ -1,9 +1,27 @@
 package com.decurtis.youva;
 
+import android.content.Context;
+
 public class ServiceFactory {
+    private static Context mContext;
+
+    public ServiceFactory(Context context) {
+        mContext = context;
+    }
+
+    public static void create(Context context) {
+        mContext = context;
+    }
 
     public static DatabaseServiceManager getDatabaseManager(){
         return new DatabaseServiceManagerImpl();
     }
 
+    public static SharedPrefManager getSharedPreferences() {
+        return SharedPrefManager.getInstance(mContext);
+    }
+
+    public static ThreadExecutor getThreadExecutor() {
+        return ThreadExecutor.getInstance();
+    }
 }
