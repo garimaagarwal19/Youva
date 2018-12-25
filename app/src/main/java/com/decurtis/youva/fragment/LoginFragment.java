@@ -1,14 +1,17 @@
-package com.decurtis.youva;
+package com.decurtis.youva.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.decurtis.youva.MainActivity;
+import com.decurtis.youva.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,18 +26,21 @@ import com.google.android.gms.common.api.Scope;
  * Created by Garima Chamaria on 20/12/18.
  */
 public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+    public static final int REQ_CODE = 9001;
+
     private View mView;
+    private MainActivity mActivity;
     private SignInButton mSignInButton;
 
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleApiClient mGoogleApiClient;
 
-    public static final int REQ_CODE = 9001;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.login_fragment, container, false);
+        mActivity = ((MainActivity)getActivity());
+        mActivity.showToolbar(false);
         return mView;
     }
 
@@ -86,6 +92,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.e("Error " + connectionResult.getErrorCode(), connectionResult.getErrorMessage());
     }
 }

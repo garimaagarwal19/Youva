@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorStatusBar">#12171a</color>
+    <color name="colorToolBar">#1d2529</color>
+    <color name="colorFragmentBGDark">#273238</color>
+    <color name="colorFragmentBGLight">#465A65</color>
+
+    <color name="colorTextGray">#b8c6cd</color>
 </resources>

@@ -2,13 +2,18 @@ package com.decurtis.youva;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.decurtis.youva.fragment.LoginFragment;
+import com.decurtis.youva.fragment.ModeSelectionFragment;
 import com.decurtis.youva.model.UserDeails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -21,36 +26,57 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     private Toolbar mToolbar;
-    private TextView mLogoutText;
+    private TextView mTitle, mLogoutText;
+    private ImageView mBackNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findAllIds();
+        initComponents();
         addLoginFragment();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     private void findAllIds() {
         mToolbar = findViewById(R.id.toolbar);
         mLogoutText = findViewById(R.id.text_signOut);
-        mToolbar.inflateMenu(R.menu.menu);
+        mTitle = findViewById(R.id.title);
+        mBackNavigation = findViewById(R.id.img_back);
     }
 
+    private void initComponents() {
+        mToolbar.inflateMenu(R.menu.menu);
+        mToolbar.setOnMenuItemClickListener(mOnMenuItemClickListener);
+
+        mBackNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popBackStack();
+            }
+        });
+
+        int appMode = SharedPrefManager.getInstance(getApplicationContext()).getAppMode();
+//        if(appMode == 0)
+//            mLogoutText.setVisibility(View.GONE);
+//        else
+//            mLogoutText.setVisibility(View.VISIBLE);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    }
 
     private void addLoginFragment() {
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, new LoginFragment()).commit();
     }
 
-    public void addUserFragment(String name) {
-        //TODO : Need to do corrections here
+    public void addModeSelectionFragment(String name) {
         Bundle bundle = new Bundle();
-        bundle.putString("name" , name);
+        bundle.putString(AppConstants.NAME, name);
         ModeSelectionFragment modeSelectionFragment = new ModeSelectionFragment();
         modeSelectionFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, modeSelectionFragment).commit();
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.frame_container, modeSelectionFragment).commit();
     }
 
     @Override
@@ -69,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     String fullName = account.getDisplayName();
                     String id = account.getId();
                     String photoUrl = String.valueOf(account.getPhotoUrl());
-                    addUserFragment(fullName);
+                    addModeSelectionFragment(fullName);
 
                     saveDataToDatabase(fullName, email, photoUrl, id);
 
@@ -80,25 +106,53 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Error : ", "Error while getting account details");
             }
         } else {
-            Log.e("Error : " , "Error While Google Login");
+            Log.e("Error : ", "Error While Google Login");
         }
     }
 
     private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
         UserDeails userDeails = new UserDeails();
         userDeails.setEmail(email);
-        if(photoUrl != null && photoUrl.length() > 0)
+        if (photoUrl != null && photoUrl.length() > 0)
             userDeails.setImageURL(photoUrl);
         userDeails.setName(fullName);
         userDeails.setKey(id);
         ServiceFactory.getDatabaseManager().saveUserBasicData(userDeails);
     }
 
-    public void showHideToolbar(boolean needToShow) {
-        if(needToShow) {
+    public void showToolbar(boolean needToShow) {
+        if (needToShow)
             mToolbar.setVisibility(View.VISIBLE);
-        } else {
+        else
             mToolbar.setVisibility(View.GONE);
+    }
+
+    public void setNavigationAndTitle(String title, boolean showNavigation) {
+        if(showNavigation)
+            mBackNavigation.setVisibility(View.VISIBLE);
+        else
+            mBackNavigation.setVisibility(View.GONE);
+        mTitle.setText(title);
+    }
+
+    Toolbar.OnMenuItemClickListener mOnMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.sign_out: //perform logout here
+                    break;
+
+                default: //do nothing
+            }
+            return true;
         }
+    };
+
+    private void popBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+        if(fm.getBackStackEntryCount() >= 1)
+            fm.popBackStack();
+        else
+            this.finish();
     }
 }
