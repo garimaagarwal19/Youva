@@ -32,11 +32,11 @@ public class ModeSelectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mHeading = mView.findViewById(R.id.heading);
-        mBusinessPerson = (ImageView) mView.findViewById(R.id.img_business_person);
+        mBusinessPerson = (ImageView) mView.findViewById(R.id.img_business_owner);
         mIndividual = (ImageView) mView.findViewById(R.id.img_individual);
 
         String[] substring = name.split(" ");
-        mHeading.setText("Hi " + substring[0] +"! "+ AppConstant.SELECT_MODE);
+        mHeading.setText("Hi " + substring[0] +"! "+ AppConstants.SELECT_MODE);
 
         mBusinessPerson.setOnClickListener(new View.OnClickListener() {
             @Override
