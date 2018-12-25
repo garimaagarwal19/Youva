@@ -34,7 +34,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.google_login, container, false);
+        mView = inflater.inflate(R.layout.login_fragment, container, false);
         return mView;
     }
 

@@ -2,4 +2,6 @@
     <string name="app_name">Youva</string>
 
     <string name="client_id">727460680079-6tvdvkfbqotv1n8hr8ugb3e5t6hfou88.apps.googleusercontent.com</string>
+
+    <string name="sign_out">Sign Out</string>
 </resources>

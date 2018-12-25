@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.decurtis.youva.model.UserDeails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,14 +20,24 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
+    private Toolbar mToolbar;
+    private TextView mLogoutText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findAllIds();
         addLoginFragment();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     }
+
+    private void findAllIds() {
+        mToolbar = findViewById(R.id.toolbar);
+        mLogoutText = findViewById(R.id.text_signOut);
+        mToolbar.inflateMenu(R.menu.menu);
+    }
+
 
     private void addLoginFragment() {
         getSupportFragmentManager().beginTransaction().
@@ -79,5 +92,13 @@ public class MainActivity extends AppCompatActivity {
         userDeails.setName(fullName);
         userDeails.setKey(id);
         ServiceFactory.getDatabaseManager().saveUserBasicData(userDeails);
+    }
+
+    public void showHideToolbar(boolean needToShow) {
+        if(needToShow) {
+            mToolbar.setVisibility(View.VISIBLE);
+        } else {
+            mToolbar.setVisibility(View.GONE);
+        }
     }
 }
