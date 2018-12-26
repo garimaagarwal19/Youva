@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                     String photoUrl = String.valueOf(account.getPhotoUrl());
                     addModeSelectionFragment(fullName);
 
-                    ServiceFactory.getSharedPreferences().setLoggedInAccountKey(id);
                     saveDataToDatabase(fullName, email, photoUrl, id);
 
                 } catch (ApiException e) {
@@ -146,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         userDetails.setName(fullName);
         userDetails.setKey(id);
         ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+        ServiceFactory.getSharedPreferences().setLoggedInAccount(userDetails);
     }
 
     public void showToolbar(boolean needToShow) {

@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.decurtis.youva.model.AppMode;
+import com.decurtis.youva.model.UserDetails;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -11,7 +15,7 @@ import com.decurtis.youva.model.AppMode;
 public class SharedPrefManager {
     private static final String SHARED_PREFERENCES_NAME = "youva";
     private static final String APP_MODE = "AppMode";
-    private static final String ACCOUNT_ID = "AccountID";
+    private static final String LOGGED_IN_ACCOUNT = "Account";
 
     private static SharedPreferences mSharedPreference;
     private static SharedPrefManager mInstance;
@@ -39,13 +43,20 @@ public class SharedPrefManager {
         return mSharedPreference.getInt(APP_MODE, AppMode.DEFAULT.getValue());
     }
 
-    public void setLoggedInAccountKey(String value) {
+    public void setLoggedInAccount(UserDetails userDetails) {
+        Gson gson = new Gson();
+        String json = gson.toJson(userDetails);
+
         SharedPreferences.Editor editor = mSharedPreference.edit();
-        editor.putString(ACCOUNT_ID, value);
+        editor.putString(LOGGED_IN_ACCOUNT, json);
         editor.commit();
     }
 
-    public String getLoggedInAccountKey() {
-        return mSharedPreference.getString(ACCOUNT_ID, null);
+    public UserDetails getLoggedInAccount() {
+        String json = mSharedPreference.getString(LOGGED_IN_ACCOUNT, null);
+
+        Gson gson = new Gson();
+        UserDetails userDetails = gson.fromJson(json, UserDetails.class);
+        return userDetails;
     }
 }

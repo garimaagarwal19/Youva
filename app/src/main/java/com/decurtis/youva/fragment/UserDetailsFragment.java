@@ -54,18 +54,7 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private void initializeData() {
-        String id = ServiceFactory.getSharedPreferences().getLoggedInAccountKey();
-        ServiceFactory.getDatabaseManager().getLoggedInAccount(id, new DataEventListener<UserDetails>() {
-
-            @Override
-            public void OnSuccess(final UserDetails object) {
-                ThreadExecutor.getInstance().getMainThread().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mUserEmailId.setText(object.getEmail());
-                    }
-                });
-            }
-        });
+        UserDetails userDetails = ServiceFactory.getSharedPreferences().getLoggedInAccount();
+        mUserEmailId.setText(userDetails.getEmail());
     }
 }
