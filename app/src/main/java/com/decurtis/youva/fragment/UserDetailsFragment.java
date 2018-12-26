@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.decurtis.youva.ActivityCallback;
 import com.decurtis.youva.DataEventListener;
+import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
 import com.decurtis.youva.executor.ThreadExecutor;
@@ -56,5 +59,9 @@ public class UserDetailsFragment extends Fragment {
     private void initializeData() {
         UserDetails userDetails = ServiceFactory.getSharedPreferences().getLoggedInAccount();
         mUserEmailId.setText(userDetails.getEmail());
+
+        String url = userDetails.getImageURL();
+        if(!TextUtils.isEmpty(url))
+            Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
     }
 }
