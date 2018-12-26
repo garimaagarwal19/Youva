@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     addModeSelectionFragment(fullName);
 
                     ServiceFactory.getSharedPreferences().setLoggedInAccountKey(id);
-                   // SharedPrefManager.getInstance(getApplicationContext()).setLoggedInAccountKey(id);
                     saveDataToDatabase(fullName, email, photoUrl, id);
 
                 } catch (ApiException e) {

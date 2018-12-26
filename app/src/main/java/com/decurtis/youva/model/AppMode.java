@@ -1,4 +1,4 @@
-package com.decurtis.youva;
+package com.decurtis.youva.model;
 
 /**
  * Created by Garima Chamaria on 25/12/18.

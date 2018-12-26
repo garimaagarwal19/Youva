@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.decurtis.youva.DataEventListener;
 import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
+import com.decurtis.youva.executor.ThreadExecutor;
 import com.decurtis.youva.model.UserDetails;
 
 /**
@@ -50,8 +52,17 @@ public class UserDetailsFragment extends Fragment {
 
     private void initializeData() {
         String id = ServiceFactory.getSharedPreferences().getLoggedInAccountKey();
-      //  String id = SharedPrefManager.getInstance(mActivity.getApplicationContext()).getLoggedInAccountKey();
-        UserDetails userDetails = ServiceFactory.getDatabaseManager().getLoggedInAccount(id);
-        mUserEmailId.setText(userDetails.getEmail());
+        ServiceFactory.getDatabaseManager().getLoggedInAccount(id, new DataEventListener<UserDetails>() {
+
+            @Override
+            public void OnSuccess(final UserDetails object) {
+                ThreadExecutor.getInstance().getMainThread().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mUserEmailId.setText(object.getEmail());
+                    }
+                });
+            }
+        });
     }
 }
