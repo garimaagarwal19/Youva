@@ -84,8 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addLoginFragment() {
+        LoginFragment loginFragment = new LoginFragment();
+        loginFragment.setInterface(mActivityCallback);
         getSupportFragmentManager().beginTransaction().
-                replace(R.id.frame_container, new LoginFragment()).commit();
+                replace(R.id.frame_container, loginFragment).commit();
     }
 
     public void addModeSelectionFragment(String name) {
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LoginFragment.REQ_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == GoogleSignInModule.REQ_CODE && resultCode == Activity.RESULT_OK) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             if (task.isSuccessful()) {
@@ -167,7 +169,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
-                case R.id.sign_out: //perform logout here
+                case R.id.sign_out:
+                    GoogleSignInModule.getInstance().performGoogleSignOut();
+                    ServiceFactory.getSharedPreferences().removeLoggedInAccount();
+                    FragmentManager fm = getSupportFragmentManager();
+                    while(fm.getBackStackEntryCount() >= 0) {
+                        if (fm.getBackStackEntryCount() == 0) {
+                            addLoginFragment();
+                            break;
+                        }
+                        fm.popBackStackImmediate();
+                    }
                     break;
 
                 default: //do nothing

@@ -59,4 +59,10 @@ public class SharedPrefManager {
         UserDetails userDetails = gson.fromJson(json, UserDetails.class);
         return userDetails;
     }
+
+    public void removeLoggedInAccount() {
+        SharedPreferences.Editor editor = mSharedPreference.edit();
+        editor.remove(LOGGED_IN_ACCOUNT);
+        editor.commit();
+    }
 }
