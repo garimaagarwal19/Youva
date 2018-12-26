@@ -12,9 +12,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.decurtis.youva.fragment.ACKFragment;
 import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
 import com.decurtis.youva.fragment.UserDetailsFragment;
+import com.decurtis.youva.model.AppMode;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -53,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findAllIds();
         initComponents();
-        addLoginFragment();
+        if(ServiceFactory.getSharedPreferences().getAppMode() == AppMode.DEFAULT.getValue()) {
+            addLoginFragment();
+        } else
+            addACKFragment();
     }
 
     private void findAllIds() {
@@ -74,12 +79,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        int appMode = ServiceFactory.getSharedPreferences().getAppMode();
-//        if(appMode == 0)
-//            mLogoutText.setVisibility(View.GONE);
-//        else
-//            mLogoutText.setVisibility(View.VISIBLE);
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -98,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
         modeSelectionFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, modeSelectionFragment).commit();
+    }
+
+    public void addACKFragment() {
+        ACKFragment ackFragment = new ACKFragment();
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.frame_container, ackFragment, ACKFragment.TAG).commit();
     }
 
     public void addUserDetailsFragment() {
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     addModeSelectionFragment(fullName);
 
                     saveDataToDatabase(fullName, email, photoUrl, id);
+                    GoogleSignInModule.getInstance().performGoogleSignOut();
 
                 } catch (ApiException e) {
                     e.printStackTrace();
@@ -170,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.sign_out:
-                    GoogleSignInModule.getInstance().performGoogleSignOut();
                     ServiceFactory.getSharedPreferences().resetData();
                     FragmentManager fm = getSupportFragmentManager();
                     while(fm.getBackStackEntryCount() >= 0) {

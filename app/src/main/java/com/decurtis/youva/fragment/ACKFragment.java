@@ -14,6 +14,7 @@ import com.decurtis.youva.R;
  * Created by Garima Chamaria on 26/12/18.
  */
 public class ACKFragment extends Fragment{
+    public static final String TAG = ACKFragment.class.getSimpleName();
     private View mView;
 
     @Nullable
