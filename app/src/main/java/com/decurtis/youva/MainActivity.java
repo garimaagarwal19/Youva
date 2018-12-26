@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
+import com.decurtis.youva.fragment.UserDetailsFragment;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTitle, mLogoutText;
     private ImageView mBackNavigation;
 
-    private ModeSelectionCallback modeSelectionCallback = new ModeSelectionCallback(){
+    private ModeSelectionCallback mActivityCallback = new ModeSelectionCallback(){
         @Override
         public void showToolbar(boolean b) {
             MainActivity.this.showToolbar(b);
@@ -38,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void setNavigationAndTitle(String string, boolean b) {
             MainActivity.this.setNavigationAndTitle(string, b);
+        }
+
+        @Override
+        public void addUserDetailsFragment() {
+            MainActivity.this.addUserDetailsFragment();
         }
     };
 
@@ -86,10 +92,18 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.NAME, name);
         ModeSelectionFragment modeSelectionFragment = new ModeSelectionFragment();
-        modeSelectionFragment.setInterface(modeSelectionCallback);
+        modeSelectionFragment.setInterface(mActivityCallback);
         modeSelectionFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, modeSelectionFragment).commit();
+    }
+
+    public void addUserDetailsFragment() {
+        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
+        userDetailsFragment.setInterface(mActivityCallback);
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.frame_container, userDetailsFragment, UserDetailsFragment.TAG).
+                addToBackStack(UserDetailsFragment.TAG).commit();
     }
 
     @Override

@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.decurtis.youva.ActivityCallback;
 import com.decurtis.youva.DataEventListener;
-import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
 import com.decurtis.youva.executor.ThreadExecutor;
@@ -25,7 +25,7 @@ public class UserDetailsFragment extends Fragment {
     public static final String FRAG_TITLE = "User Details";
 
     private View mView;
-    private MainActivity mActivity;
+    private ActivityCallback mActivityCallback;
 
     private ImageView mUserImage;
     private TextView mUserEmailId;
@@ -34,9 +34,8 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.user_details_fragment, container, false);
-        mActivity = (MainActivity)getActivity();
-        mActivity.showToolbar(true);
-        mActivity.setNavigationAndTitle(FRAG_TITLE, true);
+        mActivityCallback.showToolbar(true);
+        mActivityCallback.setNavigationAndTitle(FRAG_TITLE, true);
         return mView;
     }
 
@@ -48,6 +47,10 @@ public class UserDetailsFragment extends Fragment {
         mUserEmailId = mView.findViewById(R.id.text_loggedIn_Id);
 
         initializeData();
+    }
+
+    public void setInterface(ActivityCallback activityCallback) {
+        mActivityCallback = activityCallback;
     }
 
     private void initializeData() {

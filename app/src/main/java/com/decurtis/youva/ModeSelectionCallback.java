@@ -1,7 +1,8 @@
 package com.decurtis.youva;
 
-public interface ModeSelectionCallback {
-    void showToolbar(boolean b);
-
-    void setNavigationAndTitle(String string, boolean b);
+/**
+ * Created by Garima Chamaria on 26/12/18.
+ */
+public interface ModeSelectionCallback extends ActivityCallback{
+    void addUserDetailsFragment();
 }

@@ -21,7 +21,7 @@ import com.decurtis.youva.ServiceFactory;
 public class ModeSelectionFragment extends Fragment {
     public static final String TAG = ModeSelectionFragment.class.getSimpleName();
 
-    private ModeSelectionCallback mModeSelectionCallback;
+    private ModeSelectionCallback mActivityCallback;
     private View mView;
     private String name;
     private TextView mHeading;
@@ -32,8 +32,8 @@ public class ModeSelectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.mode_selection_fragment, container, false);
         name = getArguments().getString(AppConstants.NAME);
-        mModeSelectionCallback.showToolbar(true);
-        mModeSelectionCallback.setNavigationAndTitle(getString(R.string.app_name), false);
+        mActivityCallback.showToolbar(true);
+        mActivityCallback.setNavigationAndTitle(getString(R.string.app_name), false);
         return mView;
     }
 
@@ -68,18 +68,16 @@ public class ModeSelectionFragment extends Fragment {
     }
 
     private void addUserDetailsFragment() {
-        getActivity().getSupportFragmentManager().beginTransaction().
-                replace(R.id.frame_container, new UserDetailsFragment(), UserDetailsFragment.TAG).addToBackStack(TAG).commit();
+        mActivityCallback.addUserDetailsFragment();
     }
 
     @Override
     public void onDestroy() {
-        mModeSelectionCallback.showToolbar(false);
+        mActivityCallback.showToolbar(false);
         super.onDestroy();
     }
 
-
-    public void setInterface(ModeSelectionCallback modeSelectionCallback) {
-        mModeSelectionCallback = modeSelectionCallback;
+    public void setInterface(ModeSelectionCallback activityCallback) {
+        mActivityCallback = activityCallback;
     }
 }
