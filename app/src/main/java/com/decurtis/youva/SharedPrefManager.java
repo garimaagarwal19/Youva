@@ -60,9 +60,10 @@ public class SharedPrefManager {
         return userDetails;
     }
 
-    public void removeLoggedInAccount() {
+    public void resetData() {
         SharedPreferences.Editor editor = mSharedPreference.edit();
         editor.remove(LOGGED_IN_ACCOUNT);
+        editor.putInt(APP_MODE, AppMode.DEFAULT.getValue());
         editor.commit();
     }
 }

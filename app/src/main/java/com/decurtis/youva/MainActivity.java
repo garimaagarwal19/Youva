@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             switch (menuItem.getItemId()) {
                 case R.id.sign_out:
                     GoogleSignInModule.getInstance().performGoogleSignOut();
-                    ServiceFactory.getSharedPreferences().removeLoggedInAccount();
+                    ServiceFactory.getSharedPreferences().resetData();
                     FragmentManager fm = getSupportFragmentManager();
                     while(fm.getBackStackEntryCount() >= 0) {
                         if (fm.getBackStackEntryCount() == 0) {
