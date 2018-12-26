@@ -14,6 +14,7 @@ import com.decurtis.youva.AppConstants;
 import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
+import com.decurtis.youva.model.AppMode;
 
 /**
  * Created by Garima Chamaria on 21/12/18.
@@ -48,14 +49,15 @@ public class ModeSelectionFragment extends Fragment {
         mBusinessPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ServiceFactory.getSharedPreferences().setAppMode(AppMode.BUSINESS.getValue());
                 addUserDetailsFragment();
-                ServiceFactory.getDatabaseManager();
             }
         });
 
         mIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ServiceFactory.getSharedPreferences().setAppMode(AppMode.INDIVIDUAL.getValue());
                 addUserDetailsFragment();
             }
         });
@@ -74,6 +76,7 @@ public class ModeSelectionFragment extends Fragment {
     @Override
     public void onDestroy() {
         mActivityCallback.showToolbar(false);
+        mActivityCallback = null;
         super.onDestroy();
     }
 
