@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addACKFragment() {
         ACKFragment ackFragment = new ACKFragment();
+        ackFragment.setInterface(mActivityCallback);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, ackFragment, ACKFragment.TAG).commit();
     }
