@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.AppConstants;
-import com.decurtis.youva.AppMode;
 import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.R;
-import com.decurtis.youva.SharedPrefManager;
 
 /**
  * Created by Garima Chamaria on 21/12/18.

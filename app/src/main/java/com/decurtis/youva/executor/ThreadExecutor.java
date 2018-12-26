@@ -1,4 +1,4 @@
-package com.decurtis.youva;
+package com.decurtis.youva.executor;
 
 import android.support.annotation.NonNull;
 
@@ -44,5 +44,9 @@ public class ThreadExecutor implements Executor {
                 runnable.run();
             }
         });
+    }
+
+    public MainThread getMainThread()  {
+        return MainThreadImpl.getInstance();
     }
 }

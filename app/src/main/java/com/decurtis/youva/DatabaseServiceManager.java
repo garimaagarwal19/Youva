@@ -6,5 +6,5 @@ public interface DatabaseServiceManager {
 
     void saveUserBasicData(UserDetails userDetails);
 
-    UserDetails getLoggedInAccount(String accountId);
+    void getLoggedInAccount(String accountId, DataEventListener<UserDetails> eventListener);
 }

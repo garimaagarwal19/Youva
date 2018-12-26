@@ -3,6 +3,8 @@ package com.decurtis.youva;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.decurtis.youva.model.AppMode;
+
 /**
  * Created by Garima Chamaria on 25/12/18.
  */

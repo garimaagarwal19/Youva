@@ -28,26 +28,36 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
     }
 
     @Override
-    public void saveUserBasicData(UserDetails userDetails) {
-        mFireBaseDatabaseUserReference.child(userDetails.getKey()).setValue(userDetails);
-    }
-
-    public UserDetails getLoggedInAccount(String accountId) {
-        DatabaseReference ref = mFireBaseDatabaseUserReference.child(accountId);
-        final UserDetails userDetails = new UserDetails();
-        ref.addValueEventListener(new ValueEventListener() {
+    public void saveUserBasicData(final UserDetails userDetails) {
+        ServiceFactory.getThreadExecutor().execute(new Runnable() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserDetails details = dataSnapshot.getValue(UserDetails.class);
-                userDetails.setEmail(details.getEmail());
-                userDetails.setImageURL(details.getImageURL());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void run() {
+                mFireBaseDatabaseUserReference.child(userDetails.getKey()).setValue(userDetails);
             }
         });
-        return userDetails;
+    }
+
+    @Override
+    public void getLoggedInAccount(String accountId, final DataEventListener<UserDetails> eventListener) {
+        final DatabaseReference ref = mFireBaseDatabaseUserReference.child(accountId);
+
+        ServiceFactory.getThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UserDetails userDetails = dataSnapshot.getValue(UserDetails.class);
+                        if(eventListener != null)
+                            eventListener.OnSuccess(userDetails);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
     }
 }

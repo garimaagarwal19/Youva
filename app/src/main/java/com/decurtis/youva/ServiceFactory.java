@@ -2,6 +2,8 @@ package com.decurtis.youva;
 
 import android.content.Context;
 
+import com.decurtis.youva.executor.ThreadExecutor;
+
 public class ServiceFactory {
     private static Context mContext;
 
