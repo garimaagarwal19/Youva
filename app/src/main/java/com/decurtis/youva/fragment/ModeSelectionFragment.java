@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.AppConstants;
-import com.decurtis.youva.AppMode;
 import com.decurtis.youva.MainActivity;
+import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
-import com.decurtis.youva.SharedPrefManager;
+import com.decurtis.youva.ServiceFactory;
 
 /**
  * Created by Garima Chamaria on 21/12/18.
@@ -22,7 +22,7 @@ import com.decurtis.youva.SharedPrefManager;
 public class ModeSelectionFragment extends Fragment {
     public static final String TAG = ModeSelectionFragment.class.getSimpleName();
 
-    private MainActivity mActivity;
+    private ModeSelectionCallback mModeSelectionCallback;
     private View mView;
     private String name;
     private TextView mHeading;
@@ -33,9 +33,8 @@ public class ModeSelectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.mode_selection_fragment, container, false);
         name = getArguments().getString(AppConstants.NAME);
-        mActivity = ((MainActivity)getActivity());
-        mActivity.showToolbar(true);
-        mActivity.setNavigationAndTitle(getString(R.string.app_name), false);
+        mModeSelectionCallback.showToolbar(true);
+        mModeSelectionCallback.setNavigationAndTitle(getString(R.string.app_name), false);
         return mView;
     }
 
@@ -50,15 +49,14 @@ public class ModeSelectionFragment extends Fragment {
         mBusinessPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  SharedPrefManager.getInstance(mActivity.getApplicationContext()).setAppMode(AppMode.BUSINESS.getValue());
                 addUserDetailsFragment();
+                ServiceFactory.getDatabaseManager();
             }
         });
 
         mIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  SharedPrefManager.getInstance(mActivity.getApplicationContext()).setAppMode(AppMode.INDIVIDUAL.getValue());
                 addUserDetailsFragment();
             }
         });
@@ -71,14 +69,17 @@ public class ModeSelectionFragment extends Fragment {
     }
 
     private void addUserDetailsFragment() {
-        mActivity.getSupportFragmentManager().beginTransaction().
+        getActivity().getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, new UserDetailsFragment(), UserDetailsFragment.TAG).addToBackStack(TAG).commit();
     }
 
     @Override
     public void onDestroy() {
-        mActivity.showToolbar(false);
+        mModeSelectionCallback.showToolbar(false);
         super.onDestroy();
     }
 
+    public void setInterface(ModeSelectionCallback modeSelectionCallback) {
+        mModeSelectionCallback = modeSelectionCallback;
+    }
 }

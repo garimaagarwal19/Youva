@@ -50,4 +50,5 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
         });
         return userDetails;
     }
+
 }

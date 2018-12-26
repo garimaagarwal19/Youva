@@ -29,6 +29,18 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTitle, mLogoutText;
     private ImageView mBackNavigation;
 
+    private ModeSelectionCallback modeSelectionCallback = new ModeSelectionCallback(){
+        @Override
+        public void showToolbar(boolean b) {
+            MainActivity.this.showToolbar(b);
+        }
+
+        @Override
+        public void setNavigationAndTitle(String string, boolean b) {
+            MainActivity.this.setNavigationAndTitle(string, b);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.NAME, name);
         ModeSelectionFragment modeSelectionFragment = new ModeSelectionFragment();
+        modeSelectionFragment.setInterface(modeSelectionCallback);
         modeSelectionFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, modeSelectionFragment).commit();
