@@ -7,15 +7,16 @@ import android.content.Context;
  * Created by Garima Chamaria on 25/12/18.
  */
 public class MainApplication extends Application{
-    private static Context mContext;
+    private static MainApplication applicationContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
         ServiceFactory.create(getApplicationContext());
+        applicationContext = this;
     }
 
-    public static Context getAppContext() {
-        return mContext;
+    public static Context getContext(){
+        return applicationContext;
     }
 }
