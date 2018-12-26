@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.AppConstants;
-import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
@@ -78,6 +77,7 @@ public class ModeSelectionFragment extends Fragment {
         mModeSelectionCallback.showToolbar(false);
         super.onDestroy();
     }
+
 
     public void setInterface(ModeSelectionCallback modeSelectionCallback) {
         mModeSelectionCallback = modeSelectionCallback;
