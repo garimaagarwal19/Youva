@@ -7,4 +7,6 @@ public interface ActivityCallback {
     void showToolbar(boolean b);
 
     void setNavigationAndTitle(String string, boolean b);
+
+    void startMap(int requestCode);
 }

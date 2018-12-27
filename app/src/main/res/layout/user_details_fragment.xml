@@ -61,7 +61,7 @@
             layout="@layout/personal_details_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp" />
 
         <TextView
             android:id="@+id/text_interests"
