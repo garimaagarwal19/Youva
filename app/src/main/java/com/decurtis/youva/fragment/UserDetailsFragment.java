@@ -1,5 +1,6 @@
 package com.decurtis.youva.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,17 +9,18 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.decurtis.youva.ActivityCallback;
-import com.decurtis.youva.DataEventListener;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
-import com.decurtis.youva.executor.ThreadExecutor;
 import com.decurtis.youva.model.UserDetails;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -32,6 +34,8 @@ public class UserDetailsFragment extends Fragment {
 
     private ImageView mUserImage;
     private TextView mUserEmailId;
+    private Button mapbtn;
+
 
     @Nullable
     @Override
@@ -47,9 +51,28 @@ public class UserDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mUserImage = mView.findViewById(R.id.img_user);
-        mUserEmailId = mView.findViewById(R.id.text_loggedIn_Id);
+        mUserEmailId = mView. findViewById(R.id.text_loggedIn_Id);
+        mapbtn = mView.findViewById(R.id.map);
+
+        mapbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivityCallback.startMap();
+            }
+        });
 
         initializeData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (getContext() == null) return;
+
+        Place selectedPlace = PlacePicker.getPlace(getContext(), data);
+        double a = selectedPlace.getLatLng().longitude;
+        double b = selectedPlace.getLatLng().latitude;
+
     }
 
     public void setInterface(ActivityCallback activityCallback) {
@@ -61,7 +84,7 @@ public class UserDetailsFragment extends Fragment {
         mUserEmailId.setText(userDetails.getEmail());
 
         String url = userDetails.getImageURL();
-        if(!TextUtils.isEmpty(url))
+        if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
     }
 }

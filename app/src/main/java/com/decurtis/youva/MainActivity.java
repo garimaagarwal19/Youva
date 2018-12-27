@@ -18,13 +18,18 @@ import com.decurtis.youva.fragment.UserDetailsFragment;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int PLACE_PICKER_REQUEST = 7;
     DatabaseReference databaseReference;
     private Toolbar mToolbar;
     private TextView mTitle, mLogoutText;
@@ -39,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void setNavigationAndTitle(String string, boolean b) {
             MainActivity.this.setNavigationAndTitle(string, b);
+        }
+
+        @Override
+        public void startMap() {
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            try {
+                startActivityForResult(builder.build(MainActivity.this), PLACE_PICKER_REQUEST);
+            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -134,10 +149,10 @@ public class MainActivity extends AppCompatActivity {
             } else if (null != task.getException()) {
                 Log.e("Error : ", "Error while getting account details");
             }
-        } else {
-            Log.e("Error : ", "Error While Google Login");
+        } else if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
+                getSupportFragmentManager().findFragmentByTag(UserDetailsFragment.TAG).onActivityResult(requestCode, resultCode, data);
+            }
         }
-    }
 
     private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
         UserDetails userDetails = new UserDetails();
