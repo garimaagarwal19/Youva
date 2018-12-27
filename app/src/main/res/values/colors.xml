@@ -8,6 +8,8 @@
     <color name="colorToolBar">#1d2529</color>
     <color name="colorFragmentBGDark">#273238</color>
     <color name="colorFragmentBGLight">#465A65</color>
+    <color name="colorFragmentBGDetails">#60717b</color>
 
     <color name="colorTextGray">#b8c6cd</color>
+    <color name="colorHintText">#E4E7E9</color>
 </resources>

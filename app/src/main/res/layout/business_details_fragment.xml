@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorFragmentBGDetails"
+    android:padding="16dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_text_businessName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorHintText">
+
+        <EditText
+            android:id="@+id/txt_businessName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/str_businessName"
+            android:textColor="@android:color/white"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txt_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_businessAddress"
+        android:textSize="16dp"
+        android:textColor="@color/colorHintText"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="top|left"
+        android:lines="3"
+        android:padding="5dp"
+        android:maxLength="100"
+        android:background="@color/colorHintText"/>
+
+    <TextView
+        android:id="@+id/txt_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_individualLocation"
+        android:textSize="16dp"
+        android:textColor="@color/colorHintText"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="start">
+        <TextView
+            android:id="@+id/txt_longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longitude : "
+            android:textSize="16dp"
+            android:layout_weight="2"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/txt_latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latitude : "
+            android:textSize="16dp"
+            android:layout_weight="2"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:id="@+id/img_location"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_add_location"/>
+    </LinearLayout>
+
+</LinearLayout>

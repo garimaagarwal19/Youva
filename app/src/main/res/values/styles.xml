@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorStatusBar</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorSecondary">@android:color/white</item>
+
+        <item name="colorControlActivated">#b1faf8</item>
     </style>
 
 </resources>
