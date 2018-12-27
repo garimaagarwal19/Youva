@@ -2,6 +2,7 @@ package com.decurtis.youva;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,13 +32,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int PLACE_PICKER_REQUEST = 7;
     DatabaseReference databaseReference;
     private Toolbar mToolbar;
     private TextView mTitle, mLogoutText;
     private ImageView mBackNavigation;
 
-    private ModeSelectionCallback mActivityCallback = new ModeSelectionCallback(){
+    private ModeSelectionCallback mActivityCallback = new ModeSelectionCallback() {
         @Override
         public void showToolbar(boolean b) {
             MainActivity.this.showToolbar(b);
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void startMap() {
+        public void startMap(int requestCode) {
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             try {
-                startActivityForResult(builder.build(MainActivity.this), PLACE_PICKER_REQUEST);
+                startActivityForResult(builder.build(MainActivity.this), requestCode);
             } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                 e.printStackTrace();
             }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findAllIds();
         initComponents();
-        if(ServiceFactory.getSharedPreferences().getAppMode() == AppMode.DEFAULT.getValue()) {
+        if (ServiceFactory.getSharedPreferences().getAppMode() == AppMode.DEFAULT.getValue()) {
             addLoginFragment();
         } else
             addACKFragment();
@@ -156,10 +156,12 @@ public class MainActivity extends AppCompatActivity {
             } else if (null != task.getException()) {
                 Log.e("Error : ", "Error while getting account details");
             }
-        } else if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
-                getSupportFragmentManager().findFragmentByTag(UserDetailsFragment.TAG).onActivityResult(requestCode, resultCode, data);
-            }
         }
+        Fragment userDetailsFragment = getSupportFragmentManager().findFragmentByTag(UserDetailsFragment.TAG);
+        if (userDetailsFragment != null) {
+            userDetailsFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
         UserDetails userDetails = new UserDetails();
@@ -180,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setNavigationAndTitle(String title, boolean showNavigation) {
-        if(showNavigation)
+        if (showNavigation)
             mBackNavigation.setVisibility(View.VISIBLE);
         else
             mBackNavigation.setVisibility(View.GONE);
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.sign_out:
                     ServiceFactory.getSharedPreferences().resetData();
                     FragmentManager fm = getSupportFragmentManager();
-                    while(fm.getBackStackEntryCount() >= 0) {
+                    while (fm.getBackStackEntryCount() >= 0) {
                         if (fm.getBackStackEntryCount() == 0) {
                             addLoginFragment();
                             break;
@@ -211,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void popBackStack() {
         FragmentManager fm = getSupportFragmentManager();
-        if(fm.getBackStackEntryCount() >= 1)
+        if (fm.getBackStackEntryCount() >= 1)
             fm.popBackStack();
         else
             this.finish();

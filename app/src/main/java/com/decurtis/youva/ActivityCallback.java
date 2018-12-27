@@ -8,5 +8,5 @@ public interface ActivityCallback {
 
     void setNavigationAndTitle(String string, boolean b);
 
-    void startMap();
+    void startMap(int requestCode);
 }
