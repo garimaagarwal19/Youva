@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFragmentBGDetails"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/txt_select_interest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_selectInterest"
+        android:textSize="16dp"
+        android:textColor="@color/colorHintText"/>
+
+    <CheckBox
+        android:id="@+id/checkbox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_select_interest"
+        android:layout_marginTop="8dp"
+        android:text="@string/str_interest1"
+        android:textSize="16dp"
+        android:textColor="@android:color/white"/>
+
+    <CheckBox
+        android:id="@+id/checkbox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_select_interest"
+        android:layout_toRightOf="@id/checkbox1"
+        android:layout_marginTop="8dp"
+        android:text="@string/str_interest2"
+        android:textSize="16dp"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="20dp"/>
+
+    <CheckBox
+        android:id="@+id/checkbox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkbox1"
+        android:layout_marginTop="8dp"
+        android:text="@string/str_interest3"
+        android:textSize="16dp"
+        android:textColor="@android:color/white"/>
+
+    <CheckBox
+        android:id="@+id/checkbox4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkbox2"
+        android:layout_toRightOf="@id/checkbox3"
+        android:layout_marginTop="8dp"
+        android:text="@string/str_interest4"
+        android:textSize="16dp"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="20dp"/>
+
+</RelativeLayout>

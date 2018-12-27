@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFragmentBGDark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_user"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/individual"
+                app:civ_border_color="@color/colorFragmentBGLight"
+                app:civ_border_width="2dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:id="@+id/text_loggedIn_Id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                tools:text="xyz@gmail.com"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="12dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorFragmentBGLight"/>
+
+        <TextView
+            android:id="@+id/text_personalDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/str_personalDetails"
+            android:textColor="@color/colorTextGray"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <include
+            layout="@layout/personal_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/text_interests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/str_interests"
+            android:textColor="@color/colorTextGray"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <include
+            layout="@layout/interest_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/text_business_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/str_businessDetails"
+            android:textColor="@color/colorTextGray"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <include
+            layout="@layout/business_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
+    </LinearLayout>
+</ScrollView>
