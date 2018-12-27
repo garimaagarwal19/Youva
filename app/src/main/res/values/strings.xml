@@ -15,17 +15,19 @@
     <string name="str_phoneNumber">Phone Number</string>
     <string name="str_individualAddress">Address</string>
     <string name="str_individualLocation">Location</string>
-    <string name="str_interests">Interests</string>
-
-    <string name="str_businessName">Business Name</string>
-    <string name="str_businessAddress">Business Address</string>
-    <string name="str_businessLocation">Business Location</string>
 
     <string name="str_male">Male</string>
     <string name="str_female">Female</string>
 
+    <string name="str_interests">Interests</string>
     <string name="str_interest1">Interest 1</string>
     <string name="str_interest2">Interest 2</string>
     <string name="str_interest3">Interest 3</string>
     <string name="str_interest4">Interest 4</string>
+
+    <string name="str_businessName">Name</string>
+    <string name="str_businessAddress">Address</string>
+    <string name="str_businessLocation">Location</string>
+
+    <string name="str_submit">Submit</string>
 </resources>

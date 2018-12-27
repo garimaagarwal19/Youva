@@ -1,205 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorFragmentBGDark">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_img_right"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.28" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_middle_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_user"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="12dp"
-        android:src="@drawable/individual"
-        app:civ_border_color="@color/colorFragmentBGLight"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_middle_horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline_img_right"
-        app:layout_constraintTop_toTopOf="parent" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_user"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/individual"
+                app:civ_border_color="@color/colorFragmentBGLight"
+                app:civ_border_width="2dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
 
-    <TextView
-        android:id="@+id/text_loggedIn_Id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_middle_horizontal"
-        app:layout_constraintLeft_toRightOf="@id/guideline_img_right"
-        tools:text="xyz@gmail.com" />
+            <TextView
+                android:id="@+id/text_loggedIn_Id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                tools:text="xyz@gmail.com"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="12dp"/>
+        </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorFragmentBGLight"
-        app:layout_constraintTop_toTopOf="@id/guideline_middle_horizontal" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorFragmentBGLight"/>
 
-    <!--  <android.support.constraint.Guideline
-          android:id="@+id/guideline_middle_vertical"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          app:layout_constraintGuide_percent="0.5" />
+        <TextView
+            android:id="@+id/text_personalDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/str_personalDetails"
+            android:textColor="@color/colorTextGray"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-      <TextView
-          android:id="@+id/text_personalDetails"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="15dp"
-          android:layout_marginTop="20dp"
-          android:text="@string/str_personalDetails"
-          android:textColor="@color/colorTextGray"
-          android:textSize="16dp"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/guideline_middle_horizontal" />
+        <include
+            layout="@layout/personal_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
 
-      <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_firstname"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="16dp"
-          android:layout_marginRight="16dp"
-          android:layout_marginTop="20dp"
-          android:textColorHint="@color/colorTextGray"
-          app:layout_constraintTop_toBottomOf="@+id/text_personalDetails">
+        <TextView
+            android:id="@+id/text_interests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/str_interests"
+            android:textColor="@color/colorTextGray"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
-          <EditText
-              android:id="@+id/editText_firstName"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="@string/str_firstName"
-              android:singleLine="true"
-              android:textColor="@android:color/white" />
+        <include
+            layout="@layout/interest_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
 
-      </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:id="@+id/text_business_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/str_businessDetails"
+            android:textColor="@color/colorTextGray"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
-      <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_lastName"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="16dp"
-          android:layout_marginRight="16dp"
-          android:layout_marginTop="8dp"
-          android:textColorHint="@color/colorTextGray"
-          app:layout_constraintTop_toBottomOf="@+id/input_layout_firstname">
+        <include
+            layout="@layout/business_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
 
-          <EditText
-              android:id="@+id/editText_lastName"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="@string/str_lastName"
-              android:singleLine="true"
-              android:textColor="@android:color/white" />
-
-      </android.support.design.widget.TextInputLayout>
-
-      <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_phoneNumber"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="16dp"
-          android:layout_marginRight="16dp"
-          android:layout_marginTop="8dp"
-          android:textColorHint="@color/colorTextGray"
-          app:layout_constraintTop_toBottomOf="@+id/input_layout_lastName">
-
-          <EditText
-              android:id="@+id/editText_phoneNumber"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="@string/str_phoneNumber"
-              android:inputType="number"
-              android:singleLine="true"
-              android:textColor="@android:color/white" />
-
-      </android.support.design.widget.TextInputLayout>
-
-      <RadioButton
-
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
-
-      <TextView
-          android:id="@+id/text_addressDetails"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="15dp"
-          android:layout_marginTop="20dp"
-          android:text="@string/str_individualAddress"
-          android:textColor="@color/colorTextGray"
-          android:textSize="16dp"
-          app:layout_constraintLeft_toLeftOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/input_layout_phoneNumber" />
-
-
-      <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_address"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="16dp"
-          android:layout_marginRight="16dp"
-          android:layout_marginTop="20dp"
-          android:textColorHint="@color/colorTextGray"
-          app:layout_constraintTop_toBottomOf="@+id/text_addressDetails">
-
-          <EditText
-              android:id="@+id/editText_address"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="@string/str_individualAddress"
-              android:singleLine="true"
-              android:textColor="@android:color/white" />
-
-      </android.support.design.widget.TextInputLayout>
-
-      <android.support.design.widget.TextInputLayout
-          android:id="@+id/input_layout_location"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="16dp"
-          android:layout_marginRight="16dp"
-          android:layout_marginTop="8dp"
-          android:textColorHint="@color/colorTextGray"
-          app:layout_constraintTop_toBottomOf="@+id/input_layout_address">
-
-          <EditText
-              android:id="@+id/editText_location"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="@string/str_individualLocation"
-              android:singleLine="true"
-              android:textColor="@android:color/white" />
-
-      </android.support.design.widget.TextInputLayout>
-
-      <Button
-          android:id="@+id/btn_next"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/input_layout_location"
-          app:layout_constraintLeft_toRightOf="parent"
-          app:layout_constraintRight_toLeftOf="parent"
-          android:layout_marginTop="8dp"
-          android:text="Next"/>
--->
-</android.support.constraint.ConstraintLayout>
-
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_submit"
+            android:textColor="@color/colorStatusBar"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorTextGray"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+</ScrollView>
