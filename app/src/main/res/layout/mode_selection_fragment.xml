@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorFragmentBGDark">
 
@@ -12,47 +11,85 @@
         android:id="@+id/heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Hi there! Please choose the mode"
+        tools:text="@string/str_selectMode"
         android:textSize="20dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_1"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
         android:textColor="@color/colorTextGray"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.27"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.44"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_business_owner"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:src="@drawable/group"
         app:civ_border_color="@color/colorFragmentBGLight"
         app:civ_border_width="2dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline_1"
+        app:layout_constraintBottom_toTopOf="@id/guideline_2"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Business Owner"
+        android:text="@string/str_businessOwner"
         android:textSize="15dp"
-        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_2"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.79"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_individual"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:src="@drawable/individual"
-        android:layout_gravity="center"
         app:civ_border_width="2dp"
         app:civ_border_color="@color/colorFragmentBGLight"
-        android:layout_marginTop="60dp"/>
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_3"
+        app:layout_constraintBottom_toTopOf="@id/guideline_4"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Individual"
+        android:text="@string/str_individual"
         android:textSize="15dp"
-        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:textColor="@android:color/white"/>
-</LinearLayout>
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_4"/>
+</android.support.constraint.ConstraintLayout>

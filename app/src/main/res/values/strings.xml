@@ -5,6 +5,15 @@
 
     <string name="sign_out">Sign Out</string>
 
+    <string name="str_googleSignIn">Google Sign-In</string>
+    <string name="str_quickStart">Quickstart</string>
+    <string name="str_signedOut">Signed out</string>
+    <string name="str_signIn">Sign in</string>
+
+    <string name="str_selectMode">Hi there! Please choose the mode</string>
+    <string name="str_businessOwner">Business Owner</string>
+    <string name="str_individual">Individual</string>
+
     <string name="str_personalDetails">Personal Details</string>
     <string name="str_businessDetails">Business Details</string>
     <string name="str_selectInterest">Please Select Your Interests</string>
