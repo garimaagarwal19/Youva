@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,9 +19,12 @@ import com.decurtis.youva.ActivityCallback;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
+import com.decurtis.youva.model.AppMode;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -40,13 +44,15 @@ public class UserDetailsFragment extends Fragment {
     private static final int INDIVIDUAL_LOCATION = 3;
     private static final int BUSINESS_LOCATION = 1;
 
+    private TextView mBusinessDetailsText;
+    private LinearLayout mBusinessLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.user_details_fragment, container, false);
         mActivityCallback.showToolbar(true);
         mActivityCallback.setNavigationAndTitle(FRAG_TITLE, true);
-
         return mView;
     }
 
@@ -58,6 +64,8 @@ public class UserDetailsFragment extends Fragment {
         mUserEmailId = mView.findViewById(R.id.text_loggedIn_Id);
         mLocationView = mView.findViewById(R.id.img_location);
         mBusinessLocationView = mView.findViewById(R.id.img_business_location);
+
+        findAllIDs();
 
         mLocationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +81,11 @@ public class UserDetailsFragment extends Fragment {
             }
         });
         initializeData();
+    }
+
+    public void findAllIDs() {
+        mBusinessDetailsText = (TextView) mView.findViewById(R.id.text_business_details);
+        mBusinessLayout = (LinearLayout) mView.findViewById(R.id.business_layout);
     }
 
     @Override
@@ -106,5 +119,11 @@ public class UserDetailsFragment extends Fragment {
         String url = userDetails.getImageURL();
         if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
+
+        int appMode = ServiceFactory.getSharedPreferences().getAppMode();
+        if(appMode != AppMode.BUSINESS.getValue()) {
+            mBusinessDetailsText.setVisibility(View.GONE);
+            mBusinessLayout.setVisibility(View.GONE);
+        }
     }
 }
