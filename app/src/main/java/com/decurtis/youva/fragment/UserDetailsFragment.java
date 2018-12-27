@@ -5,14 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.decurtis.youva.ActivityCallback;
@@ -46,6 +54,16 @@ public class UserDetailsFragment extends Fragment {
 
     private TextView mBusinessDetailsText;
     private LinearLayout mBusinessLayout;
+    private Button mBtnSubmit;
+
+    private TextInputLayout mFirstNameLayout, mLastNameLayout, mPhoneNumberLayout;
+    private EditText mFNameEdt, mLNameEdt,mPhoneEdit;
+
+    private RadioGroup mGender;
+    private RadioButton mMale, mFemale;
+    private TextView mGenderError;
+
+    private EditText mAddressEdt;
 
     @Nullable
     @Override
@@ -59,11 +77,6 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mUserImage = mView.findViewById(R.id.img_user);
-        mUserEmailId = mView.findViewById(R.id.text_loggedIn_Id);
-        mLocationView = mView.findViewById(R.id.img_location);
-        mBusinessLocationView = mView.findViewById(R.id.img_business_location);
 
         findAllIDs();
 
@@ -81,11 +94,42 @@ public class UserDetailsFragment extends Fragment {
             }
         });
         initializeData();
+
+        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validateDetails())
+                    saveDataToDatabase();
+                else
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.str_toast_error_msg),
+                            Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        setEditTextChangeListeners();
     }
 
     public void findAllIDs() {
-        mBusinessDetailsText = (TextView) mView.findViewById(R.id.text_business_details);
-        mBusinessLayout = (LinearLayout) mView.findViewById(R.id.business_layout);
+        mUserImage = mView.findViewById(R.id.img_user);
+        mUserEmailId = mView.findViewById(R.id.text_loggedIn_Id);
+        mLocationView = mView.findViewById(R.id.img_location);
+        mBusinessLocationView = mView.findViewById(R.id.img_business_location);
+
+        mBusinessDetailsText = mView.findViewById(R.id.text_business_details);
+        mBusinessLayout = mView.findViewById(R.id.business_layout);
+
+        mFirstNameLayout = mView.findViewById(R.id.input_layout_fname);
+        mLastNameLayout = mView.findViewById(R.id.input_layout_lname);
+        mPhoneNumberLayout = mView.findViewById(R.id.input_layout_phonenumber);
+        mFNameEdt = mView.findViewById(R.id.editText_fname);
+        mLNameEdt = mView.findViewById(R.id.editText_lname);
+        mPhoneEdit = mView.findViewById(R.id.editText_phoneNumber);
+
+        mGender = mView.findViewById(R.id.rg_gender);
+        mGenderError = mView.findViewById(R.id.text_error_gender);
+
+        mAddressEdt = mView.findViewById(R.id.edit_address);
+        mBtnSubmit = mView.findViewById(R.id.btn_submit);
     }
 
     @Override
@@ -125,5 +169,91 @@ public class UserDetailsFragment extends Fragment {
             mBusinessDetailsText.setVisibility(View.GONE);
             mBusinessLayout.setVisibility(View.GONE);
         }
+    }
+
+    private boolean validateDetails() {
+        if(mFNameEdt.getText().toString().length() == 0) {
+            mFirstNameLayout.setError(getActivity().getResources().getString(R.string.str_fname_error));
+            mFNameEdt.requestFocus();
+            return false;
+        } else if(mLNameEdt.getText().toString().length() == 0) {
+            mLastNameLayout.setError(getActivity().getResources().getString(R.string.str_lname_error));
+            mLNameEdt.requestFocus();
+            return false;
+        } else if(mPhoneEdit.getText().toString().length() == 0) {
+            mPhoneNumberLayout.setError(getActivity().getResources().getString(R.string.str_phone_error));
+            mPhoneEdit.requestFocus();
+            return false;
+        } else if(mGender.getCheckedRadioButtonId() == -1) {
+            mGenderError.setVisibility(View.VISIBLE);
+            return false;
+        } else if(mAddressEdt.getText().toString().length() == 0) {
+            mAddressEdt.setError(getActivity().getResources().getString(R.string.str_address_error));
+            mAddressEdt.requestFocus();
+        }
+        return true;
+    }
+
+    private void setEditTextChangeListeners() {
+        mFNameEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mFirstNameLayout.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mLNameEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mLastNameLayout.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mPhoneEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPhoneNumberLayout.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                mGenderError.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void saveDataToDatabase() {
     }
 }

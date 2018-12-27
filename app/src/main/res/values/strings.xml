@@ -16,14 +16,14 @@
 
     <string name="str_personalDetails">Personal Details</string>
     <string name="str_businessDetails">Business Details</string>
-    <string name="str_selectInterest">Please Select Your Interests</string>
+    <string name="str_selectInterest">Add Interests</string>
 
     <string name="str_firstName">First Name</string>
     <string name="str_lastName">Last Name</string>
     <string name="str_displayName">Display Name</string>
     <string name="str_phoneNumber">Phone Number</string>
     <string name="str_individualAddress">Address</string>
-    <string name="str_individualLocation">Location</string>
+    <string name="str_individualLocation">Add Location</string>
 
     <string name="str_male">Male</string>
     <string name="str_female">Female</string>
@@ -40,4 +40,12 @@
 
     <string name="str_submit">Submit</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="str_toast_error_msg">Please Enter Required Details</string>
+    <string name="str_fname_error">Please Enter FirstName</string>
+    <string name="str_lname_error">Please Enter LastName</string>
+    <string name="str_phone_error">Please Enter PhoneNumber</string>
+    <string name="str_gender_error">Please Select Gender</string>
+    <string name="str_address_error">Please Enter Address</string>
+    <string name="str_location_error">Please Add Location</string>
 </resources>
