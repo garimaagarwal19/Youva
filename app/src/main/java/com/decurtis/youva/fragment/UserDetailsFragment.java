@@ -2,6 +2,7 @@ package com.decurtis.youva.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +35,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import org.w3c.dom.Text;
+
+import java.util.zip.CheckedInputStream;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -65,6 +69,8 @@ public class UserDetailsFragment extends Fragment {
 
     private EditText mAddressEdt;
 
+    private CheckBox CB1, CB2, CB3, CB4;
+    private TextView mInterestError;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,7 +107,7 @@ public class UserDetailsFragment extends Fragment {
                 if(validateDetails())
                     saveDataToDatabase();
                 else
-                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.str_toast_error_msg),
+                    Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
                             Toast.LENGTH_SHORT).show();
             }
         });
@@ -130,6 +136,13 @@ public class UserDetailsFragment extends Fragment {
 
         mAddressEdt = mView.findViewById(R.id.edit_address);
         mBtnSubmit = mView.findViewById(R.id.btn_submit);
+
+        //TODO : Need to create this checklist dynamically
+        CB1 = mView.findViewById(R.id.checkbox1);
+        CB2 = mView.findViewById(R.id.checkbox2);
+        CB3 = mView.findViewById(R.id.checkbox3);
+        CB4 = mView.findViewById(R.id.checkbox4);
+        mInterestError = mView.findViewById(R.id.txt_error_interest);
     }
 
     @Override
@@ -172,24 +185,28 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private boolean validateDetails() {
+        Resources resources = MainApplication.getContext().getResources();
         if(mFNameEdt.getText().toString().length() == 0) {
-            mFirstNameLayout.setError(getActivity().getResources().getString(R.string.str_fname_error));
+            mFirstNameLayout.setError(resources.getString(R.string.str_error_fname));
             mFNameEdt.requestFocus();
             return false;
         } else if(mLNameEdt.getText().toString().length() == 0) {
-            mLastNameLayout.setError(getActivity().getResources().getString(R.string.str_lname_error));
+            mLastNameLayout.setError(resources.getString(R.string.str_error_lname));
             mLNameEdt.requestFocus();
             return false;
         } else if(mPhoneEdit.getText().toString().length() == 0) {
-            mPhoneNumberLayout.setError(getActivity().getResources().getString(R.string.str_phone_error));
+            mPhoneNumberLayout.setError(resources.getString(R.string.str_error_phone));
             mPhoneEdit.requestFocus();
             return false;
         } else if(mGender.getCheckedRadioButtonId() == -1) {
             mGenderError.setVisibility(View.VISIBLE);
+            mGenderError.requestFocus();
             return false;
         } else if(mAddressEdt.getText().toString().length() == 0) {
-            mAddressEdt.setError(getActivity().getResources().getString(R.string.str_address_error));
+            mAddressEdt.setError(resources.getString(R.string.str_error_address));
             mAddressEdt.requestFocus();
+        } else if(!CB1.isChecked() && !CB2.isChecked() && !CB3.isChecked() && !CB4.isChecked()) {
+
         }
         return true;
     }

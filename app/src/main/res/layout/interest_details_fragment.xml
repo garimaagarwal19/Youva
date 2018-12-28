@@ -58,4 +58,14 @@
         android:textColor="@android:color/white"
         android:layout_marginLeft="20dp"/>
 
+    <TextView
+        android:id="@+id/txt_error_interest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_error_interest"
+        android:textSize="16dp"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_below="@id/checkbox4"
+        android:layout_marginTop="8dp"/>
+
 </RelativeLayout>
