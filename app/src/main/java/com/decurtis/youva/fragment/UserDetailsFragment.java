@@ -64,6 +64,8 @@ public class UserDetailsFragment extends Fragment {
     private TextView mGenderError;
 
     private EditText mAddressEdt;
+    private ImageView locationChecked;
+    private ImageView businessLocationChecked;
 
     @Nullable
     @Override
@@ -130,6 +132,9 @@ public class UserDetailsFragment extends Fragment {
 
         mAddressEdt = mView.findViewById(R.id.edit_address);
         mBtnSubmit = mView.findViewById(R.id.btn_submit);
+
+        businessLocationChecked = mView.findViewById(R.id.img_checked_business);
+        locationChecked = mView.findViewById(R.id.img_checked);
     }
 
     @Override
@@ -142,10 +147,13 @@ public class UserDetailsFragment extends Fragment {
             case INDIVIDUAL_LOCATION:
                 double a = selectedPlace.getLatLng().longitude;
                 double b = selectedPlace.getLatLng().latitude;
+                locationChecked.setVisibility(View.VISIBLE);
                 break;
             case BUSINESS_LOCATION:
                 double c = selectedPlace.getLatLng().longitude;
                 double d = selectedPlace.getLatLng().latitude;
+                businessLocationChecked.setVisibility(View.VISIBLE);
+
                 break;
             default:
                 break;
