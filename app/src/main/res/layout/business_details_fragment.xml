@@ -24,11 +24,11 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
-        android:id="@+id/txt_address"
+        android:id="@+id/txt_business_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/str_businessAddress"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/colorHintText"
         android:layout_marginTop="8dp"/>
 
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:lines="3"
         android:padding="5dp"
         android:maxLength="100"
@@ -55,16 +55,16 @@
             android:id="@+id/img_business_location"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_add_location"/>
+            android:src="@drawable/ic_add_location" />
 
         <TextView
             android:id="@+id/txt_location_business"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_individualLocation"
-            android:textSize="16dp"
-            android:layout_toRightOf="@id/img_business_location"
-            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:layout_toEndOf="@id/img_business_location"
+            android:layout_marginStart="10dp"
             android:textColor="@color/colorHintText"/>
 
         <ImageView
@@ -72,8 +72,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_check_white"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
             android:visibility="gone"/>
     </RelativeLayout>
 

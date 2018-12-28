@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.decurtis.youva.ActivityCallback;
+import com.decurtis.youva.DataEventListener;
+import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
@@ -62,7 +64,7 @@ public class UserDetailsFragment extends Fragment {
     private Button mBtnSubmit;
 
     private TextInputLayout mFirstNameLayout, mLastNameLayout, mPhoneNumberLayout;
-    private EditText mFNameEdt, mLNameEdt,mPhoneEdit;
+    private EditText mFNameEdt, mLNameEdt, mPhoneEdit;
 
     private RadioGroup mGender;
     private RadioButton mMale, mFemale;
@@ -83,6 +85,10 @@ public class UserDetailsFragment extends Fragment {
     private TextView mAddBusinessLocation;
     private boolean isBusinessLocationAdded = false;
     private ImageView businessLocationChecked;
+
+    double individualLatLong[] = {0, 0};
+    double businessLatLong[] = {0, 0};
+
 
     @Nullable
     @Override
@@ -117,7 +123,7 @@ public class UserDetailsFragment extends Fragment {
         mBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateDetails())
+                if (validateDetails())
                     saveDataToDatabase();
                 else
                     Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
@@ -175,8 +181,8 @@ public class UserDetailsFragment extends Fragment {
         Place selectedPlace = PlacePicker.getPlace(getContext(), data);
         switch (requestCode) {
             case INDIVIDUAL_LOCATION:
-                double a = selectedPlace.getLatLng().longitude;
-                double b = selectedPlace.getLatLng().latitude;
+                individualLatLong[0] = selectedPlace.getLatLng().latitude;
+                individualLatLong[1] = selectedPlace.getLatLng().longitude;
                 locationChecked.setVisibility(View.VISIBLE);
                 if(!isPersonalLocationAdded) {
                     isPersonalLocationAdded = true;
@@ -186,8 +192,8 @@ public class UserDetailsFragment extends Fragment {
 
                 break;
             case BUSINESS_LOCATION:
-                double c = selectedPlace.getLatLng().longitude;
-                double d = selectedPlace.getLatLng().latitude;
+                businessLatLong[0] = selectedPlace.getLatLng().latitude;
+                businessLatLong[1] = selectedPlace.getLatLng().longitude;
                 businessLocationChecked.setVisibility(View.VISIBLE);
                 if(!isBusinessLocationAdded) {
                     isBusinessLocationAdded = true;
@@ -205,15 +211,15 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private void initializeData() {
-        UserDetails userDetails = ServiceFactory.getSharedPreferences().getLoggedInAccount();
+        UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
         mUserEmailId.setText(userDetails.getEmail());
 
         String url = userDetails.getImageURL();
         if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
 
-        int appMode = ServiceFactory.getSharedPreferences().getAppMode();
-        if(appMode != AppMode.BUSINESS.getValue()) {
+        int appMode = ServiceFactory.getSharedPreferencesManager().getAppMode();
+        if (appMode != AppMode.BUSINESS.getValue()) {
             mBusinessDetailsText.setVisibility(View.GONE);
             mBusinessLayout.setVisibility(View.GONE);
         }
@@ -248,7 +254,7 @@ public class UserDetailsFragment extends Fragment {
             isValidated = false;
         }
 
-        if(ServiceFactory.getSharedPreferences().getAppMode() == AppMode.BUSINESS.getValue()) {
+        if(ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
             if(mBusinessNameEdt.getText().toString().length() == 0) {
                 mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
                 isValidated = false;
@@ -359,5 +365,28 @@ public class UserDetailsFragment extends Fragment {
     };
 
     private void saveDataToDatabase() {
+
+        ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
+            @Override
+            public void OnSuccess(UserDetails userDetails) {
+                userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
+                userDetails.setLastname(String.valueOf(mLNameEdt.getText()));
+                userDetails.setPhonenumber(Integer.parseInt(String.valueOf(mPhoneEdit.getText())));
+
+                if (mMale.isChecked()) {
+                    userDetails.setGender(1);
+                } else {
+                    userDetails.setGender(2);
+                }
+
+                userDetails.setIndividuallonglat(individualLatLong);
+
+                userDetails.setBusinessname(String.valueOf(mBusinessNameEdt.getText()));
+                userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
+                userDetails.setBusinesslonglat(businessLatLong);
+                ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+
+            }
+        });
     }
 }
