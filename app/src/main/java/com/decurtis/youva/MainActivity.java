@@ -24,7 +24,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findAllIds();
         initComponents();
-        if (ServiceFactory.getSharedPreferences().getAppMode() == AppMode.DEFAULT.getValue()) {
+        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.DEFAULT.getValue()) {
             addLoginFragment();
         } else
             addACKFragment();
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         userDetails.setName(fullName);
         userDetails.setKey(id);
         ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-        ServiceFactory.getSharedPreferences().setLoggedInAccount(userDetails);
+        ServiceFactory.getSharedPreferencesManager().setLoggedInAccount(userDetails);
     }
 
     public void showToolbar(boolean needToShow) {
@@ -194,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.sign_out:
-                    ServiceFactory.getSharedPreferences().resetData();
+                    ServiceFactory.getSharedPreferencesManager().resetData();
                     FragmentManager fm = getSupportFragmentManager();
                     while (fm.getBackStackEntryCount() >= 0) {
                         if (fm.getBackStackEntryCount() == 0) {

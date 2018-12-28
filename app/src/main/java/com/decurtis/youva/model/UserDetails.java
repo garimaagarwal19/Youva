@@ -12,8 +12,19 @@ public class UserDetails {
     private String key;
     private ArrayList<String> individualInterest = new ArrayList<>();
     private ArrayList<String> businessInterest = new ArrayList<>();
-    private int latitude;
-    private int longitude;
+
+    private String firstname;
+    private String lastname;
+    long phonenumber;
+    int gender;
+    double[] individuallonglat;
+
+    private String businessname;
+    private String businessaddress;
+    long businessphonenumber;
+    double[] businesslonglat;
+
+
 
     public UserDetails(String name,
                        String type,
@@ -22,9 +33,7 @@ public class UserDetails {
                        String email,
                        String key,
                        ArrayList<String> individualInterest,
-                       ArrayList<String> businessInterest,
-                       int latitude,
-                       int longitude) {
+                       ArrayList<String> businessInterest) {
         this.name = name;
         this.type = type;
         this.imageURL = imageURL;
@@ -33,8 +42,6 @@ public class UserDetails {
         this.key = key;
         this.individualInterest = individualInterest;
         this.businessInterest = businessInterest;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 
     public UserDetails() {
@@ -75,14 +82,6 @@ public class UserDetails {
         return businessInterest;
     }
 
-    public int getLatitude() {
-        return latitude;
-    }
-
-    public int getLongitude() {
-        return longitude;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -115,12 +114,75 @@ public class UserDetails {
         this.businessInterest = businessInterest;
     }
 
-    public void setLatitude(int latitude) {
-        this.latitude = latitude;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLongitude(int longitude) {
-        this.longitude = longitude;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public long getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(long phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public double[] getIndividuallonglat() {
+        return individuallonglat;
+    }
+
+    public void setIndividuallonglat(double[] individuallonglat) {
+        this.individuallonglat = individuallonglat;
+    }
+
+    public String getBusinessname() {
+        return businessname;
+    }
+
+    public void setBusinessname(String businessname) {
+        this.businessname = businessname;
+    }
+
+    public String getBusinessaddress() {
+        return businessaddress;
+    }
+
+    public void setBusinessaddress(String businessaddress) {
+        this.businessaddress = businessaddress;
+    }
+
+    public long getBusinessphonenumber() {
+        return businessphonenumber;
+    }
+
+    public void setBusinessphonenumber(long businessphonenumber) {
+        this.businessphonenumber = businessphonenumber;
+    }
+
+    public double[] getBusinesslonglat() {
+        return businesslonglat;
+    }
+
+    public void setBusinesslonglat(double[] businesslonglat) {
+        this.businesslonglat = businesslonglat;
+    }
 }

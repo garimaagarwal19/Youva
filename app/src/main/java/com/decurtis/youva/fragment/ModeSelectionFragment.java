@@ -49,7 +49,7 @@ public class ModeSelectionFragment extends Fragment {
         mBusinessPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServiceFactory.getSharedPreferences().setAppMode(AppMode.BUSINESS.getValue());
+                ServiceFactory.getSharedPreferencesManager().setAppMode(AppMode.BUSINESS.getValue());
                 addUserDetailsFragment();
             }
         });
@@ -57,7 +57,7 @@ public class ModeSelectionFragment extends Fragment {
         mIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServiceFactory.getSharedPreferences().setAppMode(AppMode.INDIVIDUAL.getValue());
+                ServiceFactory.getSharedPreferencesManager().setAppMode(AppMode.INDIVIDUAL.getValue());
                 addUserDetailsFragment();
             }
         });

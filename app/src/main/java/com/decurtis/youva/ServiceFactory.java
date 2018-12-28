@@ -19,7 +19,7 @@ public class ServiceFactory {
         return new DatabaseServiceManagerImpl();
     }
 
-    public static SharedPrefManager getSharedPreferences() {
+    public static SharedPrefManager getSharedPreferencesManager() {
         return SharedPrefManager.getInstance(mContext);
     }
 

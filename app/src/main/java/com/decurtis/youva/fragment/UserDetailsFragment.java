@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.decurtis.youva.ActivityCallback;
+import com.decurtis.youva.DataEventListener;
+import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
@@ -31,8 +33,6 @@ import com.decurtis.youva.model.AppMode;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -57,7 +57,7 @@ public class UserDetailsFragment extends Fragment {
     private Button mBtnSubmit;
 
     private TextInputLayout mFirstNameLayout, mLastNameLayout, mPhoneNumberLayout;
-    private EditText mFNameEdt, mLNameEdt,mPhoneEdit;
+    private EditText mFNameEdt, mLNameEdt, mPhoneEdit, businessName, businessAddress;
 
     private RadioGroup mGender;
     private RadioButton mMale, mFemale;
@@ -66,6 +66,10 @@ public class UserDetailsFragment extends Fragment {
     private EditText mAddressEdt;
     private ImageView locationChecked;
     private ImageView businessLocationChecked;
+
+    double individualLatLong[] = {0, 0};
+    double businessLatLong[] = {0, 0};
+
 
     @Nullable
     @Override
@@ -100,7 +104,7 @@ public class UserDetailsFragment extends Fragment {
         mBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateDetails())
+                if (validateDetails())
                     saveDataToDatabase();
                 else
                     Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.str_toast_error_msg),
@@ -126,6 +130,8 @@ public class UserDetailsFragment extends Fragment {
         mFNameEdt = mView.findViewById(R.id.editText_fname);
         mLNameEdt = mView.findViewById(R.id.editText_lname);
         mPhoneEdit = mView.findViewById(R.id.editText_phoneNumber);
+        businessName= mView.findViewById(R.id.txt_businessName);
+        businessAddress = mView.findViewById(R.id.txt_business_address);
 
         mGender = mView.findViewById(R.id.rg_gender);
         mGenderError = mView.findViewById(R.id.text_error_gender);
@@ -145,13 +151,13 @@ public class UserDetailsFragment extends Fragment {
         Place selectedPlace = PlacePicker.getPlace(getContext(), data);
         switch (requestCode) {
             case INDIVIDUAL_LOCATION:
-                double a = selectedPlace.getLatLng().longitude;
-                double b = selectedPlace.getLatLng().latitude;
+                individualLatLong[0] = selectedPlace.getLatLng().latitude;
+                individualLatLong[1] = selectedPlace.getLatLng().longitude;
                 locationChecked.setVisibility(View.VISIBLE);
                 break;
             case BUSINESS_LOCATION:
-                double c = selectedPlace.getLatLng().longitude;
-                double d = selectedPlace.getLatLng().latitude;
+                businessLatLong[0] = selectedPlace.getLatLng().latitude;
+                businessLatLong[1] = selectedPlace.getLatLng().longitude;
                 businessLocationChecked.setVisibility(View.VISIBLE);
 
                 break;
@@ -165,37 +171,37 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private void initializeData() {
-        UserDetails userDetails = ServiceFactory.getSharedPreferences().getLoggedInAccount();
+        UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
         mUserEmailId.setText(userDetails.getEmail());
 
         String url = userDetails.getImageURL();
         if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
 
-        int appMode = ServiceFactory.getSharedPreferences().getAppMode();
-        if(appMode != AppMode.BUSINESS.getValue()) {
+        int appMode = ServiceFactory.getSharedPreferencesManager().getAppMode();
+        if (appMode != AppMode.BUSINESS.getValue()) {
             mBusinessDetailsText.setVisibility(View.GONE);
             mBusinessLayout.setVisibility(View.GONE);
         }
     }
 
     private boolean validateDetails() {
-        if(mFNameEdt.getText().toString().length() == 0) {
+        if (mFNameEdt.getText().toString().length() == 0) {
             mFirstNameLayout.setError(getActivity().getResources().getString(R.string.str_fname_error));
             mFNameEdt.requestFocus();
             return false;
-        } else if(mLNameEdt.getText().toString().length() == 0) {
+        } else if (mLNameEdt.getText().toString().length() == 0) {
             mLastNameLayout.setError(getActivity().getResources().getString(R.string.str_lname_error));
             mLNameEdt.requestFocus();
             return false;
-        } else if(mPhoneEdit.getText().toString().length() == 0) {
+        } else if (mPhoneEdit.getText().toString().length() == 0) {
             mPhoneNumberLayout.setError(getActivity().getResources().getString(R.string.str_phone_error));
             mPhoneEdit.requestFocus();
             return false;
-        } else if(mGender.getCheckedRadioButtonId() == -1) {
+        } else if (mGender.getCheckedRadioButtonId() == -1) {
             mGenderError.setVisibility(View.VISIBLE);
             return false;
-        } else if(mAddressEdt.getText().toString().length() == 0) {
+        } else if (mAddressEdt.getText().toString().length() == 0) {
             mAddressEdt.setError(getActivity().getResources().getString(R.string.str_address_error));
             mAddressEdt.requestFocus();
         }
@@ -263,5 +269,29 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private void saveDataToDatabase() {
+
+        ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
+            @Override
+            public void OnSuccess(UserDetails userDetails) {
+                userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
+                userDetails.setLastname(String.valueOf(mLNameEdt.getText()));
+                userDetails.setPhonenumber(Integer.parseInt(String.valueOf(mPhoneEdit.getText())));
+
+                if (mMale.isChecked()) {
+                    userDetails.setGender(1);
+                } else {
+                    userDetails.setGender(2);
+                }
+
+                userDetails.setIndividuallonglat(individualLatLong);
+
+                userDetails.setBusinessname(String.valueOf(businessName.getText()));
+                userDetails.setBusinessaddress(String.valueOf(businessAddress.getText()));
+                userDetails.setBusinesslonglat(businessLatLong);
+                ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+
+            }
+        });
     }
+
 }
