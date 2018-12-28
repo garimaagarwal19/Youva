@@ -41,11 +41,14 @@
     <string name="str_submit">Submit</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="str_toast_error_msg">Please Enter Required Details</string>
-    <string name="str_fname_error">Please Enter FirstName</string>
-    <string name="str_lname_error">Please Enter LastName</string>
-    <string name="str_phone_error">Please Enter PhoneNumber</string>
-    <string name="str_gender_error">Please Select Gender</string>
-    <string name="str_address_error">Please Enter Address</string>
-    <string name="str_location_error">Please Add Location</string>
+    <string name="str_error_toast_msg">Please Enter Required Details</string>
+    <string name="str_error_fname">Please Enter FirstName</string>
+    <string name="str_error_lname">Please Enter LastName</string>
+    <string name="str_error_phone">Please Enter PhoneNumber</string>
+    <string name="str_error_gender">Please Select Gender</string>
+    <string name="str_error_address">Please Enter Address</string>
+    <string name="str_error_location">Please Add Location</string>
+
+    <string name="str_error_interest">Please Select Interests</string>
+    <string name="str_error_bName">Please Enter Business Name</string>
 </resources>
