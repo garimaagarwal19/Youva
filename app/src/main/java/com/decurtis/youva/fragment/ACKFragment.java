@@ -14,19 +14,19 @@ import com.decurtis.youva.R;
 /**
  * Created by Garima Chamaria on 26/12/18.
  */
-public class ACKFragment extends Fragment{
+
+public class ACKFragment extends Fragment {
     public static final String TAG = ACKFragment.class.getSimpleName();
-    public static final String FRAG_TITLE = "ACk";
-    private View mView;
+    private static final String FRAG_TITLE = "ACk";
     private UserDetailCallback mActivityCallback;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.ack_fragment, container, false);
+        View view = inflater.inflate(R.layout.ack_fragment, container, false);
         mActivityCallback.showToolbar(true);
         mActivityCallback.setNavigationAndTitle(FRAG_TITLE, false);
-        return mView;
+        return view;
     }
 
     public void setInterface(UserDetailCallback activityCallback) {

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/str_selectInterest"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/colorHintText"/>
 
     <CheckBox
@@ -21,7 +21,7 @@
         android:layout_below="@+id/txt_select_interest"
         android:layout_marginTop="8dp"
         android:text="@string/str_interest1"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@android:color/white"/>
 
     <CheckBox
@@ -29,12 +29,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_select_interest"
-        android:layout_toRightOf="@id/checkbox1"
+        android:layout_toEndOf="@id/checkbox1"
         android:layout_marginTop="8dp"
         android:text="@string/str_interest2"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@android:color/white"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <CheckBox
         android:id="@+id/checkbox3"
@@ -43,7 +43,7 @@
         android:layout_below="@id/checkbox1"
         android:layout_marginTop="8dp"
         android:text="@string/str_interest3"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@android:color/white"/>
 
     <CheckBox
@@ -51,11 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/checkbox2"
-        android:layout_toRightOf="@id/checkbox3"
+        android:layout_toEndOf="@id/checkbox3"
         android:layout_marginTop="8dp"
         android:text="@string/str_interest4"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@android:color/white"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginStart="20dp"/>
 
 </RelativeLayout>

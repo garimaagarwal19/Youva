@@ -10,7 +10,7 @@ import android.os.Looper;
 public class MainThreadImpl implements MainThread {
     private static MainThread sMainThread;
 
-    private Handler mHandler;
+    private final Handler mHandler;
 
     private MainThreadImpl() {
         mHandler = new Handler(Looper.getMainLooper());

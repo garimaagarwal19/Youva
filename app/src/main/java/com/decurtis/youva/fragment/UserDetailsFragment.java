@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class UserDetailsFragment extends Fragment {
     public static final String TAG = UserDetailsFragment.class.getSimpleName();
-    public static final String FRAG_TITLE = "User Details";
+    private static final String FRAG_TITLE = "User Details";
 
     private View mView;
     private UserDetailCallback mActivityCallback;
@@ -65,7 +65,7 @@ public class UserDetailsFragment extends Fragment {
     private EditText mFNameEdt, mLNameEdt, mPhoneEdit;
 
     private RadioGroup mGender;
-    private RadioButton mMale, mFemale;
+    private RadioButton mMale;
     private TextView mGenderError;
 
     private EditText mAddressEdt;
@@ -106,7 +106,7 @@ public class UserDetailsFragment extends Fragment {
         setViewItemClickListeners();
     }
 
-    public void findAllIDs() {
+    private void findAllIDs() {
         mUserImage = mView.findViewById(R.id.img_user);
         mUserEmailId = mView.findViewById(R.id.text_loggedIn_Id);
         mLocationView = mView.findViewById(R.id.img_location);
@@ -124,7 +124,6 @@ public class UserDetailsFragment extends Fragment {
 
         mGender = mView.findViewById(R.id.rg_gender);
         mMale = mView.findViewById(R.id.btn_male);
-        mFemale = mView.findViewById(R.id.btn_female);
         mGenderError = mView.findViewById(R.id.text_error_gender);
 
         mAddressEdt = mView.findViewById(R.id.edit_address);
@@ -364,7 +363,7 @@ public class UserDetailsFragment extends Fragment {
         });
     }
 
-    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+    private final CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

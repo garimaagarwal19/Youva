@@ -20,7 +20,6 @@ import com.decurtis.youva.model.AppMode;
  * Created by Garima Chamaria on 21/12/18.
  */
 public class ModeSelectionFragment extends Fragment {
-    public static final String TAG = ModeSelectionFragment.class.getSimpleName();
 
     private ModeSelectionCallback mActivityCallback;
     private String name;
@@ -32,7 +31,9 @@ public class ModeSelectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mode_selection_fragment, container, false);
         findAllIDs(view);
-        name = getArguments().getString(AppConstants.NAME);
+        Bundle bundle = getArguments();
+        if(bundle != null)
+            name = bundle.getString(AppConstants.NAME);
         mActivityCallback.showToolbar(true);
         mActivityCallback.setNavigationAndTitle(getString(R.string.app_name), false);
         return view;

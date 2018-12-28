@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:text="@string/str_female"
             android:textColor="@android:color/white"/>
 
@@ -84,8 +84,8 @@
             android:layout_height="wrap_content"
             android:text="@string/str_error_gender"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="5dp"
             android:visibility="gone"
             android:textColor="@android:color/holo_red_light"/>
     </RadioGroup>
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/str_individualAddress"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/colorHintText"
         android:layout_marginTop="8dp"/>
 
@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:lines="3"
         android:padding="5dp"
         android:maxLength="100"
@@ -129,9 +129,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_individualLocation"
-            android:textSize="16dp"
-            android:layout_toRightOf="@id/img_location"
-            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:layout_toEndOf="@id/img_location"
+            android:layout_marginStart="10dp"
             android:textColor="@color/colorHintText"/>
         
         <ImageView
@@ -139,8 +139,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_check_white"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
             android:visibility="gone"/>
     </RelativeLayout>
 

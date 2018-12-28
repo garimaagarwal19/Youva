@@ -8,7 +8,7 @@ public enum AppMode {
     BUSINESS(1),
     INDIVIDUAL(2);
 
-    private int mValue;
+    private final int mValue;
 
     AppMode(int value){
         mValue = value;

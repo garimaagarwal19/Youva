@@ -1,10 +1,10 @@
 package com.decurtis.youva;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,13 +40,7 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
                 task.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        System.out.println(e);
-                    }
-                });
-                task.addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        System.out.println(aVoid);
+                        Log.d("saveUserBasicData", e.getMessage());
                     }
                 });
             }

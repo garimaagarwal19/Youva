@@ -51,4 +51,5 @@
 
     <string name="str_error_interest">Please Select Interests</string>
     <string name="str_error_bName">Please Enter Business Name</string>
+    <string name="userprofile_successfully_created">UserProfile Successfully created.</string>
 </resources>

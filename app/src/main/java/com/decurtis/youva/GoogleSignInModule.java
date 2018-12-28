@@ -23,7 +23,6 @@ import com.google.android.gms.common.api.Status;
 public class GoogleSignInModule implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
     public static final int REQ_CODE = 9001;
 
-    private GoogleSignInClient mGoogleSignInClient;
     private GoogleApiClient mGoogleApiClient;
 
     public GoogleSignInModule() {
@@ -38,7 +37,7 @@ public class GoogleSignInModule implements GoogleApiClient.OnConnectionFailedLis
                 .requestScopes(new Scope(Scopes.PROFILE))
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(MainApplication.getContext(), signInOptions);
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(MainApplication.getContext(), signInOptions);
 
         mGoogleApiClient = new GoogleApiClient.Builder(MainApplication.getContext())
                 .addOnConnectionFailedListener(this)

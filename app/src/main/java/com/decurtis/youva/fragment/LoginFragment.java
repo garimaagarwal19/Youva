@@ -28,7 +28,6 @@ import com.google.android.gms.tasks.Task;
 public class LoginFragment extends Fragment {
     private View mView;
     private LoginCallback mActivityCallback;
-    private SignInButton mSignInButton;
     private GoogleSignInModule googleSignInModule;
 
     @Nullable
@@ -43,7 +42,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mSignInButton = (SignInButton) mView.findViewById(R.id.google_button);
+        SignInButton mSignInButton = mView.findViewById(R.id.google_button);
 
         googleSignInModule = new GoogleSignInModule();
         mSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +97,9 @@ public class LoginFragment extends Fragment {
 
     private void performGoogleSignIn() {
         Intent intent = googleSignInModule.getGoogleSignInIntent();
-        getActivity().startActivityForResult(intent, GoogleSignInModule.REQ_CODE);
+        Activity activity = getActivity();
+        if(activity != null)
+            activity.startActivityForResult(intent, GoogleSignInModule.REQ_CODE);
     }
 
     private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {

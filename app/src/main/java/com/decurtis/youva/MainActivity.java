@@ -27,10 +27,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private TextView mTitle, mLogoutText;
+    private TextView mTitle;
     private ImageView mBackNavigation;
 
-    private ModeSelectionCallback mModeSelectionCallback = new ModeSelectionCallback() {
+    private final ModeSelectionCallback mModeSelectionCallback = new ModeSelectionCallback() {
         @Override
         public void showToolbar(boolean b) {
             MainActivity.this.showToolbar(b);
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private UserDetailCallback mUserDetailCallback = new UserDetailCallback() {
+    private final UserDetailCallback mUserDetailCallback = new UserDetailCallback() {
         @Override
         public void openACkFragment() {
             addACKFragment();
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
-    private LoginCallback loginCallback  = new LoginCallback() {
+    private final LoginCallback loginCallback  = new LoginCallback() {
         @Override
         public void loginComplete(String name) {
             addModeSelectionFragment(name);
@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void findAllIds() {
         mToolbar = findViewById(R.id.toolbar);
-        mLogoutText = findViewById(R.id.text_signOut);
         mTitle = findViewById(R.id.title);
         mBackNavigation = findViewById(R.id.img_back);
     }
@@ -109,15 +108,12 @@ public class MainActivity extends AppCompatActivity {
     private void initComponents() {
         mToolbar.inflateMenu(R.menu.menu);
         mToolbar.setOnMenuItemClickListener(mOnMenuItemClickListener);
-
         mBackNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popBackStack();
             }
         });
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     private void addLoginFragment() {
@@ -127,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 replace(R.id.frame_container, loginFragment).commit();
     }
 
-    public void addModeSelectionFragment(String name) {
+    private void addModeSelectionFragment(String name) {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.NAME, name);
         ModeSelectionFragment modeSelectionFragment = new ModeSelectionFragment();
@@ -137,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 replace(R.id.frame_container, modeSelectionFragment).commit();
     }
 
-    public void addUserDetailsFragment() {
+    private void addUserDetailsFragment() {
         UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
         userDetailsFragment.setInterface(mUserDetailCallback);
         getSupportFragmentManager().beginTransaction().
@@ -145,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 addToBackStack(UserDetailsFragment.TAG).commit();
     }
 
-    public void addACKFragment() {
+    private void addACKFragment() {
         FragmentManager fm = getSupportFragmentManager();
         while(fm.getBackStackEntryCount() > 0)
             fm.popBackStackImmediate();
@@ -183,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         mTitle.setText(title);
     }
 
-    Toolbar.OnMenuItemClickListener mOnMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+    final Toolbar.OnMenuItemClickListener mOnMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {

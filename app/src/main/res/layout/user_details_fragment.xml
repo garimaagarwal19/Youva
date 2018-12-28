@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -21,8 +21,8 @@
                 android:id="@+id/img_user"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/individual"
                 app:civ_border_color="@color/colorFragmentBGLight"
                 app:civ_border_width="2dp"
@@ -33,9 +33,9 @@
                 android:id="@+id/text_loggedIn_Id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textColor="@android:color/white"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 tools:text="xyz@gmail.com"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="12dp"/>
@@ -50,11 +50,11 @@
             android:id="@+id/text_personalDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:text="@string/str_personalDetails"
             android:textColor="@color/colorTextGray"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <include
@@ -67,11 +67,11 @@
             android:id="@+id/text_interests"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:text="@string/str_interests"
             android:textColor="@color/colorTextGray"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <include
@@ -84,11 +84,11 @@
             android:id="@+id/text_business_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:text="@string/str_businessDetails"
             android:textColor="@color/colorTextGray"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <include

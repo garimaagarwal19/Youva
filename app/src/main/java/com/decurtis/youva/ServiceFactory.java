@@ -1,26 +1,19 @@
 package com.decurtis.youva;
 
-import android.content.Context;
-
 import com.decurtis.youva.executor.ThreadExecutor;
 
 public class ServiceFactory {
-    private static Context mContext;
 
-    public ServiceFactory(Context context) {
-        mContext = context;
+    public ServiceFactory() {
+        /*Empty constructor*/
     }
 
-    public static void create(Context context) {
-        mContext = context;
-    }
-
-    public static DatabaseServiceManager getDatabaseManager(){
+    public static DatabaseServiceManager getDatabaseManager() {
         return new DatabaseServiceManagerImpl();
     }
 
     public static SharedPreferenceManager getSharedPreferencesManager() {
-        return SharedPrefManagerImpl.getInstance(mContext);
+        return SharedPrefManagerImpl.getInstance();
     }
 
     public static ThreadExecutor getThreadExecutor() {
