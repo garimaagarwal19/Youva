@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,10 +70,20 @@ public class UserDetailsFragment extends Fragment {
 
     private EditText mAddressEdt;
     private ImageView locationChecked;
-    private ImageView businessLocationChecked;
+    private TextView mAddLocation;
+    private boolean isPersonalLocationAdded = false;
 
     private CheckBox CB1, CB2, CB3, CB4;
-    private TextView mInterestError;
+    private TextView mAddInterest;
+    private boolean isInterestSelected = false;
+
+    private TextInputLayout mBusinessNameLayout;
+    private EditText mBusinessNameEdt;
+    private EditText mBusinesssAddressEdt;
+    private TextView mAddBusinessLocation;
+    private boolean isBusinessLocationAdded = false;
+    private ImageView businessLocationChecked;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -137,9 +148,7 @@ public class UserDetailsFragment extends Fragment {
         mGenderError = mView.findViewById(R.id.text_error_gender);
 
         mAddressEdt = mView.findViewById(R.id.edit_address);
-        mBtnSubmit = mView.findViewById(R.id.btn_submit);
-
-        businessLocationChecked = mView.findViewById(R.id.img_checked_business);
+        mAddLocation = mView.findViewById(R.id.txt_location);
         locationChecked = mView.findViewById(R.id.img_checked);
 
         //TODO : Need to create this checklist dynamically
@@ -147,7 +156,15 @@ public class UserDetailsFragment extends Fragment {
         CB2 = mView.findViewById(R.id.checkbox2);
         CB3 = mView.findViewById(R.id.checkbox3);
         CB4 = mView.findViewById(R.id.checkbox4);
-        mInterestError = mView.findViewById(R.id.txt_error_interest);
+        mAddInterest = mView.findViewById(R.id.txt_select_interest);
+
+        mBusinessNameLayout = mView.findViewById(R.id.input_layout_businessName);
+        mBusinessNameEdt = mView.findViewById(R.id.edittext_businessName);
+        mBusinesssAddressEdt = mView.findViewById(R.id.edit_businessAddress);
+        mAddBusinessLocation = mView.findViewById(R.id.txt_location_business);
+        businessLocationChecked = mView.findViewById(R.id.img_checked_business);
+
+        mBtnSubmit = mView.findViewById(R.id.btn_submit);
     }
 
     @Override
@@ -161,12 +178,22 @@ public class UserDetailsFragment extends Fragment {
                 double a = selectedPlace.getLatLng().longitude;
                 double b = selectedPlace.getLatLng().latitude;
                 locationChecked.setVisibility(View.VISIBLE);
+                if(!isPersonalLocationAdded) {
+                    isPersonalLocationAdded = true;
+                    mAddLocation.setError(null);
+                    mAddLocation.setTextColor(MainApplication.getContext().getResources().getColor(R.color.colorHintText));
+                }
+
                 break;
             case BUSINESS_LOCATION:
                 double c = selectedPlace.getLatLng().longitude;
                 double d = selectedPlace.getLatLng().latitude;
                 businessLocationChecked.setVisibility(View.VISIBLE);
-
+                if(!isBusinessLocationAdded) {
+                    isBusinessLocationAdded = true;
+                    mAddBusinessLocation.setError(null);
+                    mAddBusinessLocation.setTextColor(MainApplication.getContext().getResources().getColor(R.color.colorHintText));
+                }
                 break;
             default:
                 break;
@@ -213,8 +240,35 @@ public class UserDetailsFragment extends Fragment {
         } else if(mAddressEdt.getText().toString().length() == 0) {
             mAddressEdt.setError(resources.getString(R.string.str_error_address));
             mAddressEdt.requestFocus();
+            return false;
+        } else if(!isPersonalLocationAdded) {
+            mAddLocation.setError(resources.getString(R.string.str_error_location));
+            mAddLocation.setTextColor(resources.getColor(android.R.color.holo_red_light));
+            mAddLocation.requestFocus();
+            return false;
         } else if(!CB1.isChecked() && !CB2.isChecked() && !CB3.isChecked() && !CB4.isChecked()) {
+            isInterestSelected = false;
+            mAddInterest.setError(resources.getString(R.string.str_error_interest));
+            mAddInterest.setTextColor(resources.getColor(android.R.color.holo_red_light));
+            mAddInterest.requestFocus();
+            return false;
+        }
 
+        if(ServiceFactory.getSharedPreferences().getAppMode() == AppMode.BUSINESS.getValue()) {
+            if(mBusinessNameEdt.getText().toString().length() == 0) {
+                mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
+                mBusinessNameEdt.requestFocus();
+                return false;
+            } else if(mBusinesssAddressEdt.getText().toString().length() == 0) {
+                mBusinesssAddressEdt.setError(resources.getString(R.string.str_error_address));
+                mBusinesssAddressEdt.requestFocus();
+                return false;
+            } else if(!isBusinessLocationAdded) {
+                mAddBusinessLocation.setError(resources.getString(R.string.str_error_location));
+                mAddBusinessLocation.setTextColor(resources.getColor(android.R.color.holo_red_light));
+                mAddBusinessLocation.requestFocus();
+                return false;
+            }
         }
         return true;
     }
@@ -277,7 +331,41 @@ public class UserDetailsFragment extends Fragment {
                 mGenderError.setVisibility(View.GONE);
             }
         });
+
+        CB1.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        CB2.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        CB3.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        CB4.setOnCheckedChangeListener(mOnCheckedChangeListener);
+
+        mBusinessNameEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mBusinessNameLayout.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
+
+    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener= new CompoundButton.OnCheckedChangeListener(){
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            if(!isInterestSelected) {
+                isInterestSelected = true;
+                mAddInterest.setError(null);
+                mAddInterest.setTextColor(MainApplication.getContext().getResources().getColor(R.color.colorHintText));
+            }
+        }
+    };
 
     private void saveDataToDatabase() {
     }

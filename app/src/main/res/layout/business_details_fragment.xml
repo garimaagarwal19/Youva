@@ -8,13 +8,13 @@
     android:padding="16dp">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_text_businessName"
+        android:id="@+id/input_layout_businessName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorHintText">
 
         <EditText
-            android:id="@+id/txt_businessName"
+            android:id="@+id/edittext_businessName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/str_businessName"
@@ -33,6 +33,7 @@
         android:layout_marginTop="8dp"/>
 
     <EditText
+        android:id="@+id/edit_businessAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -57,7 +58,7 @@
             android:src="@drawable/ic_add_location"/>
 
         <TextView
-            android:id="@+id/txt_location"
+            android:id="@+id/txt_location_business"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_individualLocation"
