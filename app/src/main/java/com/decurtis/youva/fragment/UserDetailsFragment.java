@@ -76,7 +76,6 @@ public class UserDetailsFragment extends Fragment {
     private CheckBox CB1, CB2, CB3, CB4;
     private TextView mAddInterest;
     private boolean isInterestSelected = false;
-    private ArrayList<String> mPersonInterestList;
 
     private TextInputLayout mBusinessNameLayout;
     private EditText mBusinessNameEdt;
@@ -85,8 +84,9 @@ public class UserDetailsFragment extends Fragment {
     private boolean isBusinessLocationAdded = false;
     private ImageView businessLocationChecked;
 
-    List<Double> individualLatLong = new ArrayList<>(2);
-    List<Double> businessLatLong = new ArrayList<>(2);
+    private List<Double> individualLatLong;
+    private List<Double> businessLatLong;
+    private ArrayList<String> mPersonInterestList;
 
 
     @Nullable
@@ -101,37 +101,9 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         findAllIDs();
-
-        mLocationView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivityCallback.startMap(INDIVIDUAL_LOCATION);
-            }
-        });
-
-        mBusinessLocationView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivityCallback.startMap(BUSINESS_LOCATION);
-            }
-        });
         initializeData();
-
-        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validateDetails()) {
-                    saveDataToDatabase();
-                    mActivityCallback.openACkFragment();
-                } else
-                    Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
-                            Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        setEditTextChangeListeners();
+        setViewItemClickListeners();
     }
 
     public void findAllIDs() {
@@ -191,8 +163,8 @@ public class UserDetailsFragment extends Fragment {
                     mAddLocation.setError(null);
                     mAddLocation.setTextColor(MainApplication.getContext().getResources().getColor(R.color.colorHintText));
                 }
-
                 break;
+
             case BUSINESS_LOCATION:
                 businessLatLong.add(selectedPlace.getLatLng().latitude);
                 businessLatLong.add(selectedPlace.getLatLng().longitude);
@@ -214,6 +186,9 @@ public class UserDetailsFragment extends Fragment {
 
     private void initializeData() {
         mPersonInterestList = new ArrayList<>();
+        individualLatLong = new ArrayList<>(2);
+        businessLatLong = new ArrayList<>(2);
+
         UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
         mUserEmailId.setText(userDetails.getEmail());
 
@@ -281,7 +256,33 @@ public class UserDetailsFragment extends Fragment {
         return isValidated;
     }
 
-    private void setEditTextChangeListeners() {
+    private void setViewItemClickListeners() {
+        mLocationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivityCallback.startMap(INDIVIDUAL_LOCATION);
+            }
+        });
+
+        mBusinessLocationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivityCallback.startMap(BUSINESS_LOCATION);
+            }
+        });
+
+        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateDetails()) {
+                    saveDataToDatabase();
+                    mActivityCallback.openACkFragment();
+                } else
+                    Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
+                            Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mFNameEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -402,7 +403,6 @@ public class UserDetailsFragment extends Fragment {
                 userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
                 userDetails.setBusinesslonglat(businessLatLong);
                 ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-
             }
         });
     }

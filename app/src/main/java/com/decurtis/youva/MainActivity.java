@@ -86,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findAllIds();
         initComponents();
-        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.DEFAULT.getValue()) {
+        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.DEFAULT.getValue())
             addLoginFragment();
-        } else
+        else
             addACKFragment();
     }
 
@@ -131,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addACKFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        while(fm.getBackStackEntryCount() > 0)
+            fm.popBackStackImmediate();
+
         ACKFragment ackFragment = new ACKFragment();
         ackFragment.setInterface(mACKFragmentCallback);
         getSupportFragmentManager().beginTransaction().
@@ -212,16 +216,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.sign_out:
                     ServiceFactory.getSharedPreferencesManager().resetData();
                     FragmentManager fm = getSupportFragmentManager();
-                    while (fm.getBackStackEntryCount() >= 0) {
-                        if (fm.getBackStackEntryCount() == 0) {
-                            addLoginFragment();
-                            break;
-                        }
+                    while (fm.getBackStackEntryCount() > 0)
                         fm.popBackStackImmediate();
-                    }
+                    addLoginFragment();
                     break;
 
                 default: //do nothing
+                    break;
             }
             return true;
         }
