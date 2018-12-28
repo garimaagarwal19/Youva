@@ -220,57 +220,48 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private boolean validateDetails() {
+        boolean isValidated = true;
         Resources resources = MainApplication.getContext().getResources();
         if(mFNameEdt.getText().toString().length() == 0) {
             mFirstNameLayout.setError(resources.getString(R.string.str_error_fname));
-            mFNameEdt.requestFocus();
-            return false;
-        } else if(mLNameEdt.getText().toString().length() == 0) {
+            isValidated = false;
+        } if(mLNameEdt.getText().toString().length() == 0) {
             mLastNameLayout.setError(resources.getString(R.string.str_error_lname));
-            mLNameEdt.requestFocus();
-            return false;
-        } else if(mPhoneEdit.getText().toString().length() == 0) {
+            isValidated = false;
+        } if(mPhoneEdit.getText().toString().length() == 0) {
             mPhoneNumberLayout.setError(resources.getString(R.string.str_error_phone));
-            mPhoneEdit.requestFocus();
-            return false;
-        } else if(mGender.getCheckedRadioButtonId() == -1) {
+            isValidated = false;
+        } if(mGender.getCheckedRadioButtonId() == -1) {
             mGenderError.setVisibility(View.VISIBLE);
-            mGenderError.requestFocus();
-            return false;
-        } else if(mAddressEdt.getText().toString().length() == 0) {
+            isValidated = false;
+        } if(mAddressEdt.getText().toString().length() == 0) {
             mAddressEdt.setError(resources.getString(R.string.str_error_address));
-            mAddressEdt.requestFocus();
-            return false;
-        } else if(!isPersonalLocationAdded) {
+            isValidated = false;
+        } if(!isPersonalLocationAdded) {
             mAddLocation.setError(resources.getString(R.string.str_error_location));
             mAddLocation.setTextColor(resources.getColor(android.R.color.holo_red_light));
-            mAddLocation.requestFocus();
-            return false;
-        } else if(!CB1.isChecked() && !CB2.isChecked() && !CB3.isChecked() && !CB4.isChecked()) {
+            isValidated = false;
+        } if(!CB1.isChecked() && !CB2.isChecked() && !CB3.isChecked() && !CB4.isChecked()) {
             isInterestSelected = false;
             mAddInterest.setError(resources.getString(R.string.str_error_interest));
             mAddInterest.setTextColor(resources.getColor(android.R.color.holo_red_light));
-            mAddInterest.requestFocus();
-            return false;
+            isValidated = false;
         }
 
         if(ServiceFactory.getSharedPreferences().getAppMode() == AppMode.BUSINESS.getValue()) {
             if(mBusinessNameEdt.getText().toString().length() == 0) {
                 mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
-                mBusinessNameEdt.requestFocus();
-                return false;
-            } else if(mBusinesssAddressEdt.getText().toString().length() == 0) {
+                isValidated = false;
+            } if(mBusinesssAddressEdt.getText().toString().length() == 0) {
                 mBusinesssAddressEdt.setError(resources.getString(R.string.str_error_address));
-                mBusinesssAddressEdt.requestFocus();
-                return false;
-            } else if(!isBusinessLocationAdded) {
+                isValidated = false;
+            } if(!isBusinessLocationAdded) {
                 mAddBusinessLocation.setError(resources.getString(R.string.str_error_location));
                 mAddBusinessLocation.setTextColor(resources.getColor(android.R.color.holo_red_light));
-                mAddBusinessLocation.requestFocus();
-                return false;
+                isValidated = false;
             }
         }
-        return true;
+        return isValidated;
     }
 
     private void setEditTextChangeListeners() {
