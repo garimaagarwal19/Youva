@@ -1,6 +1,7 @@
 package com.decurtis.youva.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserDetails {
 
@@ -15,14 +16,13 @@ public class UserDetails {
 
     private String firstname;
     private String lastname;
-    long phonenumber;
-    int gender;
-    double[] individuallonglat;
-
+    private Long phonenumber;
+    private int gender;
+    private List<Double> individuallonglat;
     private String businessname;
     private String businessaddress;
-    long businessphonenumber;
-    double[] businesslonglat;
+    private long businessphonenumber;
+    private List<Double> businesslonglat;
 
 
 
@@ -130,11 +130,11 @@ public class UserDetails {
         this.lastname = lastname;
     }
 
-    public long getPhonenumber() {
+    public Long getPhonenumber() {
         return phonenumber;
     }
 
-    public void setPhonenumber(long phonenumber) {
+    public void setPhonenumber(Long phonenumber) {
         this.phonenumber = phonenumber;
     }
 
@@ -144,14 +144,6 @@ public class UserDetails {
 
     public void setGender(int gender) {
         this.gender = gender;
-    }
-
-    public double[] getIndividuallonglat() {
-        return individuallonglat;
-    }
-
-    public void setIndividuallonglat(double[] individuallonglat) {
-        this.individuallonglat = individuallonglat;
     }
 
     public String getBusinessname() {
@@ -178,11 +170,19 @@ public class UserDetails {
         this.businessphonenumber = businessphonenumber;
     }
 
-    public double[] getBusinesslonglat() {
+    public List<Double> getIndividuallonglat() {
+        return individuallonglat;
+    }
+
+    public void setIndividuallonglat(List<Double> individuallonglat) {
+        this.individuallonglat = individuallonglat;
+    }
+
+    public List<Double> getBusinesslonglat() {
         return businesslonglat;
     }
 
-    public void setBusinesslonglat(double[] businesslonglat) {
+    public void setBusinesslonglat(List<Double> businesslonglat) {
         this.businesslonglat = businesslonglat;
     }
 }

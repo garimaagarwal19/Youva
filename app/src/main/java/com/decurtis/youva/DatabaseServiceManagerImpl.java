@@ -3,6 +3,9 @@ package com.decurtis.youva;
 import android.support.annotation.NonNull;
 
 import com.decurtis.youva.model.UserDetails;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +35,20 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
         ServiceFactory.getThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                mFireBaseDatabaseUserReference.child(userDetails.getKey()).setValue(userDetails);
+                DatabaseReference databaseReference = mFireBaseDatabaseUserReference.child(userDetails.getKey());
+                Task<Void> task = databaseReference.setValue(userDetails);
+                task.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println(e);
+                    }
+                });
+                task.addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        System.out.println(aVoid);
+                    }
+                });
             }
         });
     }

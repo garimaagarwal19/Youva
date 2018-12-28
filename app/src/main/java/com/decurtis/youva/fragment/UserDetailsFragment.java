@@ -37,6 +37,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -84,8 +85,9 @@ public class UserDetailsFragment extends Fragment {
     private boolean isBusinessLocationAdded = false;
     private ImageView businessLocationChecked;
 
-    private double individualLatLong[] = {0, 0};
-    private double businessLatLong[] = {0, 0};
+    List<Double> individualLatLong = new ArrayList<>(2);
+    List<Double> businessLatLong = new ArrayList<>(2);
+
 
     @Nullable
     @Override
@@ -149,6 +151,8 @@ public class UserDetailsFragment extends Fragment {
         mPhoneEdit = mView.findViewById(R.id.editText_phoneNumber);
 
         mGender = mView.findViewById(R.id.rg_gender);
+        mMale = mView.findViewById(R.id.btn_male);
+        mFemale = mView.findViewById(R.id.btn_female);
         mGenderError = mView.findViewById(R.id.text_error_gender);
 
         mMale = mView.findViewById(R.id.btn_male);
@@ -182,8 +186,8 @@ public class UserDetailsFragment extends Fragment {
         Place selectedPlace = PlacePicker.getPlace(getContext(), data);
         switch (requestCode) {
             case INDIVIDUAL_LOCATION:
-                individualLatLong[0] = selectedPlace.getLatLng().latitude;
-                individualLatLong[1] = selectedPlace.getLatLng().longitude;
+                individualLatLong.add(selectedPlace.getLatLng().latitude);
+                individualLatLong.add(selectedPlace.getLatLng().longitude);
                 locationChecked.setVisibility(View.VISIBLE);
                 if (!isPersonalLocationAdded) {
                     isPersonalLocationAdded = true;
@@ -193,8 +197,8 @@ public class UserDetailsFragment extends Fragment {
 
                 break;
             case BUSINESS_LOCATION:
-                businessLatLong[0] = selectedPlace.getLatLng().latitude;
-                businessLatLong[1] = selectedPlace.getLatLng().longitude;
+                businessLatLong.add(selectedPlace.getLatLng().latitude);
+                businessLatLong.add(selectedPlace.getLatLng().longitude);
                 businessLocationChecked.setVisibility(View.VISIBLE);
                 if (!isBusinessLocationAdded) {
                     isBusinessLocationAdded = true;
@@ -386,7 +390,7 @@ public class UserDetailsFragment extends Fragment {
             public void OnSuccess(UserDetails userDetails) {
                 userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
                 userDetails.setLastname(String.valueOf(mLNameEdt.getText()));
-                userDetails.setPhonenumber(Integer.parseInt(String.valueOf(mPhoneEdit.getText())));
+                userDetails.setPhonenumber(Long.parseLong(String.valueOf(mPhoneEdit.getText())));
 
                 if (mMale.isChecked()) {
                     userDetails.setGender(1);
