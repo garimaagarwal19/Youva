@@ -155,9 +155,6 @@ public class UserDetailsFragment extends Fragment {
         mFemale = mView.findViewById(R.id.btn_female);
         mGenderError = mView.findViewById(R.id.text_error_gender);
 
-        mMale = mView.findViewById(R.id.btn_male);
-        mFemale = mView.findViewById(R.id.btn_female);
-
         mAddressEdt = mView.findViewById(R.id.edit_address);
         mAddLocation = mView.findViewById(R.id.txt_location);
         locationChecked = mView.findViewById(R.id.img_checked);
