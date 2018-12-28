@@ -49,17 +49,34 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void startMap(int requestCode) {
-            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-            try {
-                startActivityForResult(builder.build(MainActivity.this), requestCode);
-            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-                e.printStackTrace();
-            }
+           MainActivity.this.startMap(requestCode);
         }
 
         @Override
         public void addUserDetailsFragment() {
             MainActivity.this.addUserDetailsFragment();
+        }
+    };
+
+    private ACKFragmentCallback mACKFragmentCallback = new ACKFragmentCallback() {
+        @Override
+        public void openACkFragment() {
+            addACKFragment();
+        }
+
+        @Override
+        public void showToolbar(boolean b) {
+            MainActivity.this.showToolbar(b);
+        }
+
+        @Override
+        public void setNavigationAndTitle(String string, boolean b) {
+            MainActivity.this.setNavigationAndTitle(string, b);
+        }
+
+        @Override
+        public void startMap(int requestCode) {
+            MainActivity.this.startMap(requestCode);
         }
     };
 
@@ -115,14 +132,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void addACKFragment() {
         ACKFragment ackFragment = new ACKFragment();
-        ackFragment.setInterface(mActivityCallback);
+        ackFragment.setInterface(mACKFragmentCallback);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, ackFragment, ACKFragment.TAG).commit();
     }
 
     public void addUserDetailsFragment() {
         UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
-        userDetailsFragment.setInterface(mActivityCallback);
+        userDetailsFragment.setInterface(mACKFragmentCallback);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, userDetailsFragment, UserDetailsFragment.TAG).
                 addToBackStack(UserDetailsFragment.TAG).commit();
@@ -209,6 +226,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    private void startMap(int requestCode) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(MainActivity.this), requestCode);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void popBackStack() {
         FragmentManager fm = getSupportFragmentManager();

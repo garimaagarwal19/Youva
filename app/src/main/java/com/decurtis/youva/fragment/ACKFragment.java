@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.decurtis.youva.ACKFragmentCallback;
 import com.decurtis.youva.ActivityCallback;
 import com.decurtis.youva.R;
 
@@ -18,7 +19,7 @@ public class ACKFragment extends Fragment{
     public static final String TAG = ACKFragment.class.getSimpleName();
     public static final String FRAG_TITLE = "ACk";
     private View mView;
-    private ActivityCallback mActivityCallback;
+    private ACKFragmentCallback mActivityCallback;
 
     @Nullable
     @Override
@@ -29,7 +30,7 @@ public class ACKFragment extends Fragment{
         return mView;
     }
 
-    public void setInterface(ActivityCallback activityCallback) {
+    public void setInterface(ACKFragmentCallback activityCallback) {
         mActivityCallback = activityCallback;
     }
 }

@@ -26,9 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.decurtis.youva.ActivityCallback;
+import com.decurtis.youva.ACKFragmentCallback;
 import com.decurtis.youva.DataEventListener;
-import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.ServiceFactory;
@@ -47,7 +46,7 @@ public class UserDetailsFragment extends Fragment {
     public static final String FRAG_TITLE = "User Details";
 
     private View mView;
-    private ActivityCallback mActivityCallback;
+    private ACKFragmentCallback mActivityCallback;
 
     private ImageView mUserImage;
     private TextView mUserEmailId;
@@ -123,6 +122,7 @@ public class UserDetailsFragment extends Fragment {
             public void onClick(View view) {
                 if (validateDetails()) {
                     saveDataToDatabase();
+                    mActivityCallback.openACkFragment();
                 } else
                     Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
                             Toast.LENGTH_SHORT).show();
@@ -150,6 +150,9 @@ public class UserDetailsFragment extends Fragment {
 
         mGender = mView.findViewById(R.id.rg_gender);
         mGenderError = mView.findViewById(R.id.text_error_gender);
+
+        mMale = mView.findViewById(R.id.btn_male);
+        mFemale = mView.findViewById(R.id.btn_female);
 
         mAddressEdt = mView.findViewById(R.id.edit_address);
         mAddLocation = mView.findViewById(R.id.txt_location);
@@ -204,7 +207,7 @@ public class UserDetailsFragment extends Fragment {
         }
     }
 
-    public void setInterface(ActivityCallback activityCallback) {
+    public void setInterface(ACKFragmentCallback activityCallback) {
         mActivityCallback = activityCallback;
     }
 
