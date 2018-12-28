@@ -260,7 +260,7 @@ public class UserDetailsFragment extends Fragment {
             return false;
         }
 
-        if(ServiceFactory.getSharedPreferences().getAppMode() == AppMode.BUSINESS.getValue()) {
+        if(ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
             if(mBusinessNameEdt.getText().toString().length() == 0) {
                 mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
                 mBusinessNameEdt.requestFocus();
@@ -390,8 +390,8 @@ public class UserDetailsFragment extends Fragment {
 
                 userDetails.setIndividuallonglat(individualLatLong);
 
-                userDetails.setBusinessname(String.valueOf(businessName.getText()));
-                userDetails.setBusinessaddress(String.valueOf(businessAddress.getText()));
+                userDetails.setBusinessname(String.valueOf(mBusinessNameEdt.getText()));
+                userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
                 userDetails.setBusinesslonglat(businessLatLong);
                 ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
 
