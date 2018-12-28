@@ -135,12 +135,13 @@
             android:textColor="@color/colorHintText"/>
         
         <ImageView
-            android:id="@+id/img_cheched"
+            android:id="@+id/img_checked"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_check_white"
             android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>

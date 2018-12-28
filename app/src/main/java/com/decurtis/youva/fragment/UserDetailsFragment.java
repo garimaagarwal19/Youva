@@ -68,6 +68,8 @@ public class UserDetailsFragment extends Fragment {
     private TextView mGenderError;
 
     private EditText mAddressEdt;
+    private ImageView locationChecked;
+    private ImageView businessLocationChecked;
 
     private CheckBox CB1, CB2, CB3, CB4;
     private TextView mInterestError;
@@ -137,6 +139,9 @@ public class UserDetailsFragment extends Fragment {
         mAddressEdt = mView.findViewById(R.id.edit_address);
         mBtnSubmit = mView.findViewById(R.id.btn_submit);
 
+        businessLocationChecked = mView.findViewById(R.id.img_checked_business);
+        locationChecked = mView.findViewById(R.id.img_checked);
+
         //TODO : Need to create this checklist dynamically
         CB1 = mView.findViewById(R.id.checkbox1);
         CB2 = mView.findViewById(R.id.checkbox2);
@@ -155,10 +160,13 @@ public class UserDetailsFragment extends Fragment {
             case INDIVIDUAL_LOCATION:
                 double a = selectedPlace.getLatLng().longitude;
                 double b = selectedPlace.getLatLng().latitude;
+                locationChecked.setVisibility(View.VISIBLE);
                 break;
             case BUSINESS_LOCATION:
                 double c = selectedPlace.getLatLng().longitude;
                 double d = selectedPlace.getLatLng().latitude;
+                businessLocationChecked.setVisibility(View.VISIBLE);
+
                 break;
             default:
                 break;
