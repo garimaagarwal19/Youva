@@ -23,7 +23,6 @@ public class ModeSelectionFragment extends Fragment {
     public static final String TAG = ModeSelectionFragment.class.getSimpleName();
 
     private ModeSelectionCallback mActivityCallback;
-    private View mView;
     private String name;
     private TextView mHeading;
     private ImageView mBusinessPerson, mIndividual;
@@ -31,45 +30,44 @@ public class ModeSelectionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.mode_selection_fragment, container, false);
+        View view = inflater.inflate(R.layout.mode_selection_fragment, container, false);
+        findAllIDs(view);
         name = getArguments().getString(AppConstants.NAME);
         mActivityCallback.showToolbar(true);
         mActivityCallback.setNavigationAndTitle(getString(R.string.app_name), false);
-        return mView;
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        findAllIDs();
 
         String[] substring = name.split(" ");
-        mHeading.setText("Hi " + substring[0] +"! "+ AppConstants.SELECT_MODE);
+        mHeading.setText("Hi " + substring[0] + "! " + AppConstants.SELECT_MODE);
 
         mBusinessPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServiceFactory.getSharedPreferencesManager().setAppMode(AppMode.BUSINESS.getValue());
-                addUserDetailsFragment();
+                addUserDetailsFragment(AppMode.BUSINESS.getValue());
             }
         });
 
         mIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServiceFactory.getSharedPreferencesManager().setAppMode(AppMode.INDIVIDUAL.getValue());
-                addUserDetailsFragment();
+                addUserDetailsFragment(AppMode.INDIVIDUAL.getValue());
             }
         });
     }
 
-    private void findAllIDs() {
-        mHeading = mView.findViewById(R.id.heading);
-        mBusinessPerson = mView.findViewById(R.id.img_business_owner);
-        mIndividual = mView.findViewById(R.id.img_individual);
+    private void findAllIDs(View view) {
+        mHeading = view.findViewById(R.id.heading);
+        mBusinessPerson = view.findViewById(R.id.img_business_owner);
+        mIndividual = view.findViewById(R.id.img_individual);
     }
 
-    private void addUserDetailsFragment() {
+    private void addUserDetailsFragment(int value) {
+        ServiceFactory.getSharedPreferencesManager().setAppMode(value);
         mActivityCallback.addUserDetailsFragment();
     }
 

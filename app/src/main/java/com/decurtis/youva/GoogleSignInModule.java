@@ -21,19 +21,12 @@ import com.google.android.gms.common.api.Status;
  * Created by Garima Chamaria on 26/12/18.
  */
 public class GoogleSignInModule implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
-    private static GoogleSignInModule mInstance;
     public static final int REQ_CODE = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleApiClient mGoogleApiClient;
 
-    private GoogleSignInModule() {
-    }
-
-    public static GoogleSignInModule getInstance() {
-        if (mInstance == null)
-            mInstance = new GoogleSignInModule();
-        return mInstance;
+    public GoogleSignInModule() {
     }
 
     public Intent getGoogleSignInIntent() {
@@ -61,7 +54,7 @@ public class GoogleSignInModule implements GoogleApiClient.OnConnectionFailedLis
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                Log.d("Google SignOut : ", status.getStatusMessage());
+
             }
         });
     }

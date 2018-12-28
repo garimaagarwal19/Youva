@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.decurtis.youva.ACKFragmentCallback;
+import com.decurtis.youva.UserDetailCallback;
 import com.decurtis.youva.DataEventListener;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
@@ -47,7 +47,7 @@ public class UserDetailsFragment extends Fragment {
     public static final String FRAG_TITLE = "User Details";
 
     private View mView;
-    private ACKFragmentCallback mActivityCallback;
+    private UserDetailCallback mActivityCallback;
 
     private ImageView mUserImage;
     private TextView mUserEmailId;
@@ -180,7 +180,7 @@ public class UserDetailsFragment extends Fragment {
         }
     }
 
-    public void setInterface(ACKFragmentCallback activityCallback) {
+    public void setInterface(UserDetailCallback activityCallback) {
         mActivityCallback = activityCallback;
     }
 

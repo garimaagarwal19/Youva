@@ -1,13 +1,11 @@
 package com.decurtis.youva;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,25 +16,21 @@ import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
 import com.decurtis.youva.fragment.UserDetailsFragment;
 import com.decurtis.youva.model.AppMode;
-import com.decurtis.youva.model.UserDetails;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseReference databaseReference;
     private Toolbar mToolbar;
     private TextView mTitle, mLogoutText;
     private ImageView mBackNavigation;
 
-    private ModeSelectionCallback mActivityCallback = new ModeSelectionCallback() {
+    private ModeSelectionCallback mModeSelectionCallback = new ModeSelectionCallback() {
         @Override
         public void showToolbar(boolean b) {
             MainActivity.this.showToolbar(b);
@@ -45,11 +39,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void setNavigationAndTitle(String string, boolean b) {
             MainActivity.this.setNavigationAndTitle(string, b);
-        }
-
-        @Override
-        public void startMap(int requestCode) {
-           MainActivity.this.startMap(requestCode);
         }
 
         @Override
@@ -58,10 +47,15 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private ACKFragmentCallback mACKFragmentCallback = new ACKFragmentCallback() {
+    private UserDetailCallback mUserDetailCallback = new UserDetailCallback() {
         @Override
         public void openACkFragment() {
             addACKFragment();
+        }
+
+        @Override
+        public void startMap(int requestCode) {
+            MainActivity.this.startMap(requestCode);
         }
 
         @Override
@@ -74,9 +68,22 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.setNavigationAndTitle(string, b);
         }
 
+    };
+
+    private LoginCallback loginCallback  = new LoginCallback() {
         @Override
-        public void startMap(int requestCode) {
-            MainActivity.this.startMap(requestCode);
+        public void loginComplete(String name) {
+            addModeSelectionFragment(name);
+        }
+
+        @Override
+        public void showToolbar(boolean b) {
+            MainActivity.this.showToolbar(b);
+        }
+
+        @Override
+        public void setNavigationAndTitle(String string, boolean b) {
+            MainActivity.this.setNavigationAndTitle(string, b);
         }
     };
 
@@ -115,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addLoginFragment() {
         LoginFragment loginFragment = new LoginFragment();
-        loginFragment.setInterface(mActivityCallback);
+        loginFragment.setInterface(loginCallback);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, loginFragment).commit();
     }
@@ -124,10 +131,18 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.NAME, name);
         ModeSelectionFragment modeSelectionFragment = new ModeSelectionFragment();
-        modeSelectionFragment.setInterface(mActivityCallback);
+        modeSelectionFragment.setInterface(mModeSelectionCallback);
         modeSelectionFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, modeSelectionFragment).commit();
+    }
+
+    public void addUserDetailsFragment() {
+        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
+        userDetailsFragment.setInterface(mUserDetailCallback);
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.frame_container, userDetailsFragment, UserDetailsFragment.TAG).
+                addToBackStack(UserDetailsFragment.TAG).commit();
     }
 
     public void addACKFragment() {
@@ -136,63 +151,22 @@ public class MainActivity extends AppCompatActivity {
             fm.popBackStackImmediate();
 
         ACKFragment ackFragment = new ACKFragment();
-        ackFragment.setInterface(mACKFragmentCallback);
+        ackFragment.setInterface(mUserDetailCallback);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.frame_container, ackFragment, ACKFragment.TAG).commit();
-    }
-
-    public void addUserDetailsFragment() {
-        UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
-        userDetailsFragment.setInterface(mACKFragmentCallback);
-        getSupportFragmentManager().beginTransaction().
-                replace(R.id.frame_container, userDetailsFragment, UserDetailsFragment.TAG).
-                addToBackStack(UserDetailsFragment.TAG).commit();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GoogleSignInModule.REQ_CODE && resultCode == Activity.RESULT_OK) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
-            if (task.isSuccessful()) {
-                try {
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    if (null == account) {
-                        return;
-                    }
-                    String email = account.getEmail();
-                    String fullName = account.getDisplayName();
-                    String id = account.getId();
-                    String photoUrl = String.valueOf(account.getPhotoUrl());
-                    addModeSelectionFragment(fullName);
-
-                    saveDataToDatabase(fullName, email, photoUrl, id);
-                    GoogleSignInModule.getInstance().performGoogleSignOut();
-
-                } catch (ApiException e) {
-                    e.printStackTrace();
-                }
-            } else if (null != task.getException()) {
-                Log.e("Error : ", "Error while getting account details");
-            }
-        }
-        Fragment userDetailsFragment = getSupportFragmentManager().findFragmentByTag(UserDetailsFragment.TAG);
-        if (userDetailsFragment != null) {
-            userDetailsFragment.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment: fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setEmail(email);
-        if (photoUrl != null && photoUrl.length() > 0)
-            userDetails.setImageURL(photoUrl);
-        userDetails.setName(fullName);
-        userDetails.setKey(id);
-        ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-        ServiceFactory.getSharedPreferencesManager().setLoggedInAccount(userDetails);
-    }
+
 
     public void showToolbar(boolean needToShow) {
         if (needToShow)
@@ -214,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.sign_out:
-                    ServiceFactory.getSharedPreferencesManager().resetData();
+                    ServiceFactory.getSharedPreferencesManager().invalidate();
                     FragmentManager fm = getSupportFragmentManager();
                     while (fm.getBackStackEntryCount() > 0)
                         fm.popBackStackImmediate();

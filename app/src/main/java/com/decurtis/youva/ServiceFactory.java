@@ -19,8 +19,8 @@ public class ServiceFactory {
         return new DatabaseServiceManagerImpl();
     }
 
-    public static SharedPrefManager getSharedPreferencesManager() {
-        return SharedPrefManager.getInstance(mContext);
+    public static SharedPreferenceManager getSharedPreferencesManager() {
+        return SharedPrefManagerImpl.getInstance(mContext);
     }
 
     public static ThreadExecutor getThreadExecutor() {
