@@ -24,11 +24,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private TextView mTitle;
     private ImageView mBackNavigation;
+
+    @Inject
+    SharedPreferenceManager mSharedPreferenceManager;
 
     private final ModeSelectionCallback mModeSelectionCallback = new ModeSelectionCallback() {
         @Override
@@ -93,7 +98,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findAllIds();
         initComponents();
-        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.DEFAULT.getValue())
+
+        MainApplication.getApplicationComponent().inject(this);
+
+        if (mSharedPreferenceManager.getAppMode() == AppMode.DEFAULT.getValue())
             addLoginFragment();
         else
             addACKFragment();
@@ -184,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.sign_out:
-                    ServiceFactory.getSharedPreferencesManager().invalidate();
+                    mSharedPreferenceManager.invalidate();
                     FragmentManager fm = getSupportFragmentManager();
                     while (fm.getBackStackEntryCount() > 0)
                         fm.popBackStackImmediate();

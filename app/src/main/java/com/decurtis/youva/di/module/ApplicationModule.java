@@ -1,10 +1,9 @@
 package com.decurtis.youva.di.module;
 
-import android.app.Application;
 import android.content.Context;
+import com.google.gson.Gson;
 
-import com.decurtis.youva.di.scope.ApplicationScope;
-
+import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
@@ -14,15 +13,21 @@ import dagger.Provides;
 
 @Module
 public class ApplicationModule {
-    private final Application mApplication;
+    private final Context mContext;
 
-    public ApplicationModule(Application application) {
-        mApplication = application;
+    public ApplicationModule(Context context) {
+        mContext = context;
     }
 
     @Provides
-    @ApplicationScope
-    public Context provideContext() {
-        return mApplication;
+    @Singleton
+    Context provideContext() {
+        return mContext;
+    }
+
+    @Provides
+    @Singleton
+    Gson provideGson() {
+        return new Gson();
     }
 }
