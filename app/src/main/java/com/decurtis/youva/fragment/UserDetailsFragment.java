@@ -279,7 +279,7 @@ public class UserDetailsFragment extends Fragment {
             public void onClick(View view) {
                 if (validateDetails()) {
                     saveDataToDatabase();
-                    ServiceFactory.getSharedPreferencesManager().setIsProfileCreated(true);
+                    MainApplication.getApplicationComponent().getSharedPreferenceManager().setIsProfileCreated(true);
                     mActivityCallback.openACkFragment();
                 } else
                     Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
