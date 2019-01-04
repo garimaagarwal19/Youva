@@ -8,6 +8,10 @@ public interface SharedPreferenceManager {
 
     int getAppMode();
 
+    void setIsProfileCreated(boolean isProfileCreated);
+
+    boolean getIsProfileCreated();
+
     void setLoggedInAccount(UserDetails userDetails);
 
     UserDetails getLoggedInAccount();

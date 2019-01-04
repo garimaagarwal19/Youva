@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findAllIds();
         initComponents();
-        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.DEFAULT.getValue())
+        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.DEFAULT.getValue() ||
+                !ServiceFactory.getSharedPreferencesManager().getIsProfileCreated())
             addLoginFragment();
         else
             addACKFragment();
