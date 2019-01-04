@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
         mActivityComponent.injectActivity(this);
 
-        if (mSharedPreferenceManager.getAppMode() == AppMode.DEFAULT.getValue())
+        if (mSharedPreferenceManager.getAppMode() == AppMode.DEFAULT.getValue() ||
+                !mSharedPreferenceManager.getIsProfileCreated())
             addLoginFragment();
         else
             addACKFragment();

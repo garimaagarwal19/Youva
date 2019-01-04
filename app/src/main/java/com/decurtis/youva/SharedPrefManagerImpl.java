@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 public class SharedPrefManagerImpl implements SharedPreferenceManager {
     private static final String SHARED_PREFERENCES_NAME = "youva";
     private static final String APP_MODE = "AppMode";
+    private static final String PROFILE_CREATED = "Profile_created";
     private static final String LOGGED_IN_ACCOUNT = "Account";
 
     private static SharedPreferences mSharedPreference;
@@ -45,6 +46,18 @@ public class SharedPrefManagerImpl implements SharedPreferenceManager {
     }
 
     @Override
+    public void setIsProfileCreated(boolean isProfileCreated) {
+        SharedPreferences.Editor editor = mSharedPreference.edit();
+        editor.putBoolean(PROFILE_CREATED, isProfileCreated);
+        editor.commit();
+    }
+
+    @Override
+    public boolean getIsProfileCreated() {
+        return mSharedPreference.getBoolean(PROFILE_CREATED, false);
+    }
+
+    @Override
     public void setLoggedInAccount(UserDetails userDetails) {
         String json = mGson.toJson(userDetails);
         SharedPreferences.Editor editor = mSharedPreference.edit();
@@ -63,6 +76,7 @@ public class SharedPrefManagerImpl implements SharedPreferenceManager {
         SharedPreferences.Editor editor = mSharedPreference.edit();
         editor.remove(LOGGED_IN_ACCOUNT);
         editor.putInt(APP_MODE, AppMode.DEFAULT.getValue());
+        editor.putBoolean(PROFILE_CREATED, false);
         editor.commit();
     }
 }
