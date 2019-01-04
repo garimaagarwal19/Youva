@@ -43,7 +43,6 @@ public class MainApplication extends Application{
         return gson;
     }
 
-
     private static ApplicationComponent mApplicationComponent;
 
    /* @Override

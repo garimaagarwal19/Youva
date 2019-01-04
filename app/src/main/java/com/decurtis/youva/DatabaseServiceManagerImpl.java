@@ -3,6 +3,7 @@ package com.decurtis.youva;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.decurtis.youva.executor.ThreadExecutor;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -17,7 +18,10 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mFireBaseDatabaseUserReference;
 
-    public DatabaseServiceManagerImpl() {
+    private ThreadExecutor mThreadExecutor;
+
+    public DatabaseServiceManagerImpl(ThreadExecutor threadExecutor) {
+        mThreadExecutor = threadExecutor;
         createDatabase();
         createDatabaseUserReference();
     }
@@ -32,7 +36,7 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
 
     @Override
     public void saveUserBasicData(final UserDetails userDetails) {
-        ServiceFactory.getThreadExecutor().execute(new Runnable() {
+        mThreadExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 DatabaseReference databaseReference = mFireBaseDatabaseUserReference.child(userDetails.getKey());
@@ -51,7 +55,7 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
     public void getLoggedInAccount(String accountId, final DataEventListener<UserDetails> eventListener) {
         final DatabaseReference ref = mFireBaseDatabaseUserReference.child(accountId);
 
-        ServiceFactory.getThreadExecutor().execute(new Runnable() {
+        mThreadExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 ref.addValueEventListener(new ValueEventListener() {

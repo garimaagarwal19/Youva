@@ -188,14 +188,17 @@ public class UserDetailsFragment extends Fragment {
         individualLatLong = new ArrayList<>(2);
         businessLatLong = new ArrayList<>(2);
 
-        UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
+      //  UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
+
+        UserDetails userDetails = MainApplication.getApplicationComponent().getSharedPreferenceManager().getLoggedInAccount();
+
         mUserEmailId.setText(userDetails.getEmail());
 
         String url = userDetails.getImageURL();
         if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
 
-        int appMode = ServiceFactory.getSharedPreferencesManager().getAppMode();
+        int appMode = MainApplication.getApplicationComponent().getSharedPreferenceManager().getAppMode();
         if (appMode != AppMode.BUSINESS.getValue()) {
             mBusinessDetailsText.setVisibility(View.GONE);
             mBusinessLayout.setVisibility(View.GONE);
@@ -237,7 +240,8 @@ public class UserDetailsFragment extends Fragment {
             isValidated = false;
         }
 
-        if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
+      //  if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
+        if (MainApplication.getApplicationComponent().getSharedPreferenceManager().getAppMode() == AppMode.BUSINESS.getValue()) {
             if (mBusinessNameEdt.getText().toString().length() == 0) {
                 mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
                 isValidated = false;
@@ -382,7 +386,8 @@ public class UserDetailsFragment extends Fragment {
 
     private void saveDataToDatabase() {
 
-        ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
+      //  ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
+            MainApplication.getApplicationComponent().getDataBaseService().getLoggedInAccount(MainApplication.getApplicationComponent().getSharedPreferenceManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
             @Override
             public void OnSuccess(UserDetails userDetails) {
                 userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
@@ -401,7 +406,9 @@ public class UserDetailsFragment extends Fragment {
                 userDetails.setBusinessname(String.valueOf(mBusinessNameEdt.getText()));
                 userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
                 userDetails.setBusinesslonglat(businessLatLong);
-                ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+             //   ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+                MainApplication.getApplicationComponent().getDataBaseService().saveUserBasicData(userDetails);
+
             }
         });
     }

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.decurtis.youva.di.scope.ActivityScope;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -20,6 +22,7 @@ public class ActivityModule {
         mActivity = activity;
     }
 
+    @Named("activity_context")
     @Provides
     @ActivityScope
     public Context provideContext() {

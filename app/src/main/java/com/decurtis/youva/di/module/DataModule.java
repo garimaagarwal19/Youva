@@ -2,6 +2,7 @@ package com.decurtis.youva.di.module;
 
 import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.DatabaseServiceManagerImpl;
+import com.decurtis.youva.executor.ThreadExecutor;
 
 import javax.inject.Singleton;
 
@@ -17,7 +18,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    DatabaseServiceManager provideDataBaseService() {
-        return new DatabaseServiceManagerImpl();
+    DatabaseServiceManager provideDataBaseService(ThreadExecutor threadExecutor) {
+        return new DatabaseServiceManagerImpl(threadExecutor);
     }
 }

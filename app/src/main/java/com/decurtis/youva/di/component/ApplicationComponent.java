@@ -13,6 +13,7 @@ import com.decurtis.youva.di.module.ThreadModule;
 import com.decurtis.youva.executor.ThreadExecutor;
 import com.google.gson.Gson;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -31,8 +32,7 @@ public interface ApplicationComponent {
 
     void injectApplication(MainApplication mainApplication);
 
-    void inject(MainActivity mainActivity);
-
+    @Named("application_context")
     Context getContext();
 
     Gson getGson();

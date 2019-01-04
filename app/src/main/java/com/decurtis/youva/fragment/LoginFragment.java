@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.decurtis.youva.GoogleSignInModule;
 import com.decurtis.youva.LoginCallback;
+import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
-import com.decurtis.youva.ServiceFactory;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -109,7 +109,10 @@ public class LoginFragment extends Fragment {
             userDetails.setImageURL(photoUrl);
         userDetails.setName(fullName);
         userDetails.setKey(id);
-        ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-        ServiceFactory.getSharedPreferencesManager().setLoggedInAccount(userDetails);
+      //  ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+      //  ServiceFactory.getSharedPreferencesManager().setLoggedInAccount(userDetails);
+
+        MainApplication.getApplicationComponent().getDataBaseService().saveUserBasicData(userDetails);
+        MainApplication.getApplicationComponent().getSharedPreferenceManager().setLoggedInAccount(userDetails);
     }
 }

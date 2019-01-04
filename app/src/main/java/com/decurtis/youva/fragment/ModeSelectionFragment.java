@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.AppConstants;
+import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
-import com.decurtis.youva.ServiceFactory;
 import com.decurtis.youva.model.AppMode;
 
 /**
@@ -68,7 +68,9 @@ public class ModeSelectionFragment extends Fragment {
     }
 
     private void addUserDetailsFragment(int value) {
-        ServiceFactory.getSharedPreferencesManager().setAppMode(value);
+       // ServiceFactory.getSharedPreferencesManager().setAppMode(value);
+
+        MainApplication.getApplicationComponent().getSharedPreferenceManager().setAppMode(value);
         mActivityCallback.addUserDetailsFragment();
     }
 

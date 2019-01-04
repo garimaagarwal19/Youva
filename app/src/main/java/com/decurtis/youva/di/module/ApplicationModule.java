@@ -3,6 +3,7 @@ package com.decurtis.youva.di.module;
 import android.content.Context;
 import com.google.gson.Gson;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
@@ -19,6 +20,7 @@ public class ApplicationModule {
         mContext = context;
     }
 
+    @Named("application_context")
     @Provides
     @Singleton
     Context provideContext() {

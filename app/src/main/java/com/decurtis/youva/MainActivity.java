@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.decurtis.youva.di.component.ActivityComponent;
+import com.decurtis.youva.di.component.DaggerActivityComponent;
+import com.decurtis.youva.di.module.ActivityModule;
 import com.decurtis.youva.fragment.ACKFragment;
 import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     SharedPreferenceManager mSharedPreferenceManager;
+    ActivityComponent mActivityComponent;
 
     private final ModeSelectionCallback mModeSelectionCallback = new ModeSelectionCallback() {
         @Override
@@ -99,7 +103,11 @@ public class MainActivity extends AppCompatActivity {
         findAllIds();
         initComponents();
 
-        MainApplication.getApplicationComponent().inject(this);
+        mActivityComponent = DaggerActivityComponent.builder().
+                applicationComponent(MainApplication.getApplicationComponent()).
+                activityModule(new ActivityModule(this)).build();
+
+        mActivityComponent.injectActivity(this);
 
         if (mSharedPreferenceManager.getAppMode() == AppMode.DEFAULT.getValue())
             addLoginFragment();
