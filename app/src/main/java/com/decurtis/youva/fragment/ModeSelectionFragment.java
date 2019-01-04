@@ -14,7 +14,11 @@ import com.decurtis.youva.AppConstants;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
+import com.decurtis.youva.SharedPreferenceManager;
+import com.decurtis.youva.di.component.ModeSelectionComponent;
 import com.decurtis.youva.model.AppMode;
+
+import javax.inject.Inject;
 
 /**
  * Created by Garima Chamaria on 21/12/18.
@@ -26,13 +30,24 @@ public class ModeSelectionFragment extends Fragment {
     private TextView mHeading;
     private ImageView mBusinessPerson, mIndividual;
 
+    private ModeSelectionComponent mModeSelectionComponent;
+    @Inject
+    SharedPreferenceManager mSharedPreferenceManager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mModeSelectionComponent = MainApplication.getInstance().plusModeSelectionComponent();
+        mModeSelectionComponent.inject(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mode_selection_fragment, container, false);
         findAllIDs(view);
         Bundle bundle = getArguments();
-        if(bundle != null)
+        if (bundle != null)
             name = bundle.getString(AppConstants.NAME);
         mActivityCallback.showToolbar(true);
         mActivityCallback.setNavigationAndTitle(getString(R.string.app_name), false);
@@ -68,9 +83,9 @@ public class ModeSelectionFragment extends Fragment {
     }
 
     private void addUserDetailsFragment(int value) {
-       // ServiceFactory.getSharedPreferencesManager().setAppMode(value);
+        // ServiceFactory.getSharedPreferencesManager().setAppMode(value);
 
-        MainApplication.getApplicationComponent().getSharedPreferenceManager().setAppMode(value);
+        mSharedPreferenceManager.setAppMode(value);
         mActivityCallback.addUserDetailsFragment();
     }
 

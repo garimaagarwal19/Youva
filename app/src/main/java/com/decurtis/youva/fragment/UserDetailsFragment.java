@@ -26,11 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.decurtis.youva.DatabaseServiceManager;
+import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.UserDetailCallback;
 import com.decurtis.youva.DataEventListener;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
-import com.decurtis.youva.ServiceFactory;
+import com.decurtis.youva.di.component.UserDetailsComponent;
 import com.decurtis.youva.model.AppMode;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.location.places.Place;
@@ -38,6 +40,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Garima Chamaria on 25/12/18.
@@ -88,6 +92,18 @@ public class UserDetailsFragment extends Fragment {
     private List<Double> businessLatLong;
     private ArrayList<String> mPersonInterestList;
 
+    private UserDetailsComponent mUserDetailsComponent;
+    @Inject
+    SharedPreferenceManager mSharedPreferenceManager;
+    @Inject
+    DatabaseServiceManager mDatabaseServiceManager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mUserDetailsComponent = MainApplication.getInstance().plusUserDetailsComponent();
+        mUserDetailsComponent.inject(this);
+    }
 
     @Nullable
     @Override
@@ -188,9 +204,9 @@ public class UserDetailsFragment extends Fragment {
         individualLatLong = new ArrayList<>(2);
         businessLatLong = new ArrayList<>(2);
 
-      //  UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
-
-        UserDetails userDetails = MainApplication.getApplicationComponent().getSharedPreferenceManager().getLoggedInAccount();
+        //  UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
+        //TODO
+        UserDetails userDetails = mSharedPreferenceManager.getLoggedInAccount();
 
         mUserEmailId.setText(userDetails.getEmail());
 
@@ -198,7 +214,7 @@ public class UserDetailsFragment extends Fragment {
         if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
 
-        int appMode = MainApplication.getApplicationComponent().getSharedPreferenceManager().getAppMode();
+        int appMode = mSharedPreferenceManager.getAppMode();
         if (appMode != AppMode.BUSINESS.getValue()) {
             mBusinessDetailsText.setVisibility(View.GONE);
             mBusinessLayout.setVisibility(View.GONE);
@@ -240,8 +256,10 @@ public class UserDetailsFragment extends Fragment {
             isValidated = false;
         }
 
-      //  if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
-        if (MainApplication.getApplicationComponent().getSharedPreferenceManager().getAppMode() == AppMode.BUSINESS.getValue()) {
+        //  if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
+
+        //TODO :
+        if (mSharedPreferenceManager.getAppMode() == AppMode.BUSINESS.getValue()) {
             if (mBusinessNameEdt.getText().toString().length() == 0) {
                 mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
                 isValidated = false;
@@ -279,7 +297,8 @@ public class UserDetailsFragment extends Fragment {
             public void onClick(View view) {
                 if (validateDetails()) {
                     saveDataToDatabase();
-                    MainApplication.getApplicationComponent().getSharedPreferenceManager().setIsProfileCreated(true);
+                    //TODO :
+                    mSharedPreferenceManager.setIsProfileCreated(true);
                     mActivityCallback.openACkFragment();
                 } else
                     Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
@@ -387,8 +406,9 @@ public class UserDetailsFragment extends Fragment {
 
     private void saveDataToDatabase() {
 
-      //  ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
-            MainApplication.getApplicationComponent().getDataBaseService().getLoggedInAccount(MainApplication.getApplicationComponent().getSharedPreferenceManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
+        //  ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
+        //TODO :
+        mDatabaseServiceManager.getLoggedInAccount(mSharedPreferenceManager.getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
             @Override
             public void OnSuccess(UserDetails userDetails) {
                 userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
@@ -407,9 +427,8 @@ public class UserDetailsFragment extends Fragment {
                 userDetails.setBusinessname(String.valueOf(mBusinessNameEdt.getText()));
                 userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
                 userDetails.setBusinesslonglat(businessLatLong);
-             //   ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-                MainApplication.getApplicationComponent().getDataBaseService().saveUserBasicData(userDetails);
-
+                //   ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
+                mDatabaseServiceManager.saveUserBasicData(userDetails);
             }
         });
     }

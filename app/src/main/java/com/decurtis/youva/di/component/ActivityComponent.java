@@ -1,41 +1,27 @@
 package com.decurtis.youva.di.component;
 
-import android.content.Context;
-
-import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.MainActivity;
-import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.di.module.ActivityModule;
+import com.decurtis.youva.di.module.LoginFragmentModule;
+import com.decurtis.youva.di.module.ModeSelectionModule;
+import com.decurtis.youva.di.module.UserDetailsModule;
 import com.decurtis.youva.di.scope.ActivityScope;
-import com.decurtis.youva.executor.ThreadExecutor;
-import com.google.gson.Gson;
 
-import javax.inject.Named;
-
-import dagger.Component;
+import dagger.Subcomponent;
 
 /**
  * Created by Garima Chamaria on 02/01/19.
  */
 
 @ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
+@Subcomponent(modules = ActivityModule.class)
 public interface ActivityComponent {
 
     void injectActivity(MainActivity mainActivity);
 
-   /* @Named("activity_context")
-    Context getActivityContext();
+    LoginComponent plusLoginComponent(LoginFragmentModule loginFragmentModule);
 
-    @Named("application_context")
-    Context getContext();
+    ModeSelectionComponent plusModeSelectionComponent(ModeSelectionModule modeSelectionModule);
 
-    Gson getGson();
-
-    DatabaseServiceManager getDataBaseService();
-
-    SharedPreferenceManager getSharedPreferenceManager();
-
-    ThreadExecutor getThreadExecutor();*/
-
+    UserDetailsComponent plusUserDetailsComponent(UserDetailsModule userDetailsModule);
 }

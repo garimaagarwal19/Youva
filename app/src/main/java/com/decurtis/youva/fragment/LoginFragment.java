@@ -11,16 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.GoogleSignInModule;
 import com.decurtis.youva.LoginCallback;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
+import com.decurtis.youva.SharedPreferenceManager;
+import com.decurtis.youva.di.component.LoginComponent;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import javax.inject.Inject;
 
 /**
  * Created by Garima Chamaria on 20/12/18.
@@ -29,6 +34,19 @@ public class LoginFragment extends Fragment {
     private View mView;
     private LoginCallback mActivityCallback;
     private GoogleSignInModule googleSignInModule;
+
+    private LoginComponent mLoginComponent;
+    @Inject
+    DatabaseServiceManager mDatabaseServiceManager;
+    @Inject
+    SharedPreferenceManager mSharedPreferenceManager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mLoginComponent = MainApplication.getInstance().plusLoginComponent();
+        mLoginComponent.inject(this);
+    }
 
     @Nullable
     @Override
@@ -112,7 +130,7 @@ public class LoginFragment extends Fragment {
       //  ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
       //  ServiceFactory.getSharedPreferencesManager().setLoggedInAccount(userDetails);
 
-        MainApplication.getApplicationComponent().getDataBaseService().saveUserBasicData(userDetails);
-        MainApplication.getApplicationComponent().getSharedPreferenceManager().setLoggedInAccount(userDetails);
+        mDatabaseServiceManager.saveUserBasicData(userDetails);
+        mSharedPreferenceManager.setLoggedInAccount(userDetails);
     }
 }

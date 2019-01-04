@@ -12,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.di.component.ActivityComponent;
-import com.decurtis.youva.di.component.DaggerActivityComponent;
-import com.decurtis.youva.di.module.ActivityModule;
 import com.decurtis.youva.fragment.ACKFragment;
 import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
@@ -35,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTitle;
     private ImageView mBackNavigation;
 
+    ActivityComponent mActivityComponent;
     @Inject
     SharedPreferenceManager mSharedPreferenceManager;
-    ActivityComponent mActivityComponent;
 
     private final ModeSelectionCallback mModeSelectionCallback = new ModeSelectionCallback() {
         @Override
@@ -103,10 +101,7 @@ public class MainActivity extends AppCompatActivity {
         findAllIds();
         initComponents();
 
-        mActivityComponent = DaggerActivityComponent.builder().
-                applicationComponent(MainApplication.getApplicationComponent()).
-                activityModule(new ActivityModule(this)).build();
-
+        mActivityComponent = MainApplication.getInstance().plusActivityComponent(this);
         mActivityComponent.injectActivity(this);
 
         if (mSharedPreferenceManager.getAppMode() == AppMode.DEFAULT.getValue() ||
@@ -178,8 +173,6 @@ public class MainActivity extends AppCompatActivity {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-
 
     public void showToolbar(boolean needToShow) {
         if (needToShow)
