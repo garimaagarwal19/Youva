@@ -20,14 +20,14 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
 
     private ThreadExecutor mThreadExecutor;
 
-    public DatabaseServiceManagerImpl(ThreadExecutor threadExecutor) {
+    public DatabaseServiceManagerImpl(ThreadExecutor threadExecutor, FirebaseDatabase firebaseDatabase) {
         mThreadExecutor = threadExecutor;
-        createDatabase();
+        createDatabase(firebaseDatabase);
         createDatabaseUserReference();
     }
 
-    private void createDatabase() {
-        mFireBaseDatabase = FirebaseDatabase.getInstance();
+    private void createDatabase(FirebaseDatabase firebaseDatabase) {
+        mFireBaseDatabase = firebaseDatabase;
     }
 
     private void createDatabaseUserReference() {

@@ -3,6 +3,7 @@ package com.decurtis.youva.di.module;
 import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.DatabaseServiceManagerImpl;
 import com.decurtis.youva.executor.ThreadExecutor;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
 
@@ -18,7 +19,13 @@ public class DataModule {
 
     @Provides
     @Singleton
-    DatabaseServiceManager provideDataBaseService(ThreadExecutor threadExecutor) {
-        return new DatabaseServiceManagerImpl(threadExecutor);
+    FirebaseDatabase provideFirebaseDatabase() {
+        return FirebaseDatabase.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    DatabaseServiceManager provideDataBaseService(ThreadExecutor threadExecutor, FirebaseDatabase firebaseDatabase) {
+        return new DatabaseServiceManagerImpl(threadExecutor, firebaseDatabase);
     }
 }
