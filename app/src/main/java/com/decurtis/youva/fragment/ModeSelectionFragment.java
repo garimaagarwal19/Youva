@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.AppConstants;
+import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
 import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.di.component.ModeSelectionComponent;
+import com.decurtis.youva.di.module.ModeSelectionModule;
 import com.decurtis.youva.model.AppMode;
 
 import javax.inject.Inject;
@@ -30,15 +32,14 @@ public class ModeSelectionFragment extends Fragment {
     private TextView mHeading;
     private ImageView mBusinessPerson, mIndividual;
 
-    private ModeSelectionComponent mModeSelectionComponent;
     @Inject
     SharedPreferenceManager mSharedPreferenceManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mModeSelectionComponent = MainApplication.getInstance().plusModeSelectionComponent();
-        mModeSelectionComponent.inject(this);
+        ModeSelectionComponent modeSelectionComponent = ((MainActivity) getActivity()).getActivityComponent().plusModeSelectionComponent(new ModeSelectionModule());
+        modeSelectionComponent.inject(this);
     }
 
     @Nullable

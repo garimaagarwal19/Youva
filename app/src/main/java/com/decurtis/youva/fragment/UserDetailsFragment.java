@@ -27,12 +27,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.decurtis.youva.DatabaseServiceManager;
+import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.UserDetailCallback;
 import com.decurtis.youva.DataEventListener;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.di.component.UserDetailsComponent;
+import com.decurtis.youva.di.module.UserDetailsModule;
 import com.decurtis.youva.model.AppMode;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.location.places.Place;
@@ -92,7 +94,6 @@ public class UserDetailsFragment extends Fragment {
     private List<Double> businessLatLong;
     private ArrayList<String> mPersonInterestList;
 
-    private UserDetailsComponent mUserDetailsComponent;
     @Inject
     SharedPreferenceManager mSharedPreferenceManager;
     @Inject
@@ -101,8 +102,8 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserDetailsComponent = MainApplication.getInstance().plusUserDetailsComponent();
-        mUserDetailsComponent.inject(this);
+        UserDetailsComponent userDetailsComponent = ((MainActivity) getActivity()).getActivityComponent().plusUserDetailsComponent(new UserDetailsModule());
+        userDetailsComponent.inject(this);
     }
 
     @Nullable

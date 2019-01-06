@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.di.component.ActivityComponent;
+import com.decurtis.youva.di.module.ActivityModule;
 import com.decurtis.youva.fragment.ACKFragment;
 import com.decurtis.youva.fragment.LoginFragment;
 import com.decurtis.youva.fragment.ModeSelectionFragment;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         findAllIds();
         initComponents();
 
-        mActivityComponent = MainApplication.getInstance().plusActivityComponent(this);
+        mActivityComponent = MainApplication.getApplicationComponent().plusActivityComponent(new ActivityModule(this));
         mActivityComponent.injectActivity(this);
 
         if (mSharedPreferenceManager.getAppMode() == AppMode.DEFAULT.getValue() ||
@@ -223,5 +224,9 @@ public class MainActivity extends AppCompatActivity {
             fm.popBackStack();
         else
             this.finish();
+    }
+
+    public ActivityComponent getActivityComponent() {
+        return mActivityComponent;
     }
 }

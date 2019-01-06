@@ -1,7 +1,7 @@
 package com.decurtis.youva.di.component;
 
 import com.decurtis.youva.di.module.LoginFragmentModule;
-import com.decurtis.youva.di.scope.LoginFragmentScope;
+import com.decurtis.youva.di.scope.FragmentScope;
 import com.decurtis.youva.fragment.LoginFragment;
 
 import dagger.Component;
@@ -12,7 +12,7 @@ import dagger.Subcomponent;
  */
 
 @Subcomponent(modules = LoginFragmentModule.class)
-@LoginFragmentScope
+@FragmentScope
 public interface LoginComponent {
     void inject(LoginFragment loginFragment);
 }

@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.GoogleSignInModule;
 import com.decurtis.youva.LoginCallback;
+import com.decurtis.youva.MainActivity;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.di.component.LoginComponent;
+import com.decurtis.youva.di.module.LoginFragmentModule;
 import com.decurtis.youva.model.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -35,7 +37,6 @@ public class LoginFragment extends Fragment {
     private LoginCallback mActivityCallback;
     private GoogleSignInModule googleSignInModule;
 
-    private LoginComponent mLoginComponent;
     @Inject
     DatabaseServiceManager mDatabaseServiceManager;
     @Inject
@@ -44,8 +45,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLoginComponent = MainApplication.getInstance().plusLoginComponent();
-        mLoginComponent.inject(this);
+        LoginComponent loginComponent = ((MainActivity) getActivity()).getActivityComponent().plusLoginComponent(new LoginFragmentModule());
+        loginComponent.inject(this);
     }
 
     @Nullable
