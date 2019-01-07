@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public ActivityComponent getActivityComponent() {
+            return MainActivity.this.getActivityComponent();
+        }
+
+        @Override
         public void addUserDetailsFragment() {
             MainActivity.this.addUserDetailsFragment();
         }
@@ -76,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.setNavigationAndTitle(string, b);
         }
 
+        @Override
+        public ActivityComponent getActivityComponent() {
+            return MainActivity.this.getActivityComponent();
+        }
     };
 
     private final LoginCallback loginCallback  = new LoginCallback() {
@@ -92,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void setNavigationAndTitle(String string, boolean b) {
             MainActivity.this.setNavigationAndTitle(string, b);
+        }
+
+        @Override
+        public ActivityComponent getActivityComponent() {
+            return MainActivity.this.getActivityComponent();
         }
     };
 

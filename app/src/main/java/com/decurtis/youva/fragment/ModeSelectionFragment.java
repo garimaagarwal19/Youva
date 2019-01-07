@@ -38,7 +38,7 @@ public class ModeSelectionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ModeSelectionComponent modeSelectionComponent = ((MainActivity) getActivity()).getActivityComponent().plusModeSelectionComponent(new ModeSelectionModule());
+        ModeSelectionComponent modeSelectionComponent = mActivityCallback.getActivityComponent().plusModeSelectionComponent(new ModeSelectionModule());
         modeSelectionComponent.inject(this);
     }
 

@@ -46,7 +46,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LoginComponent loginComponent = ((MainActivity) getActivity()).getActivityComponent().plusLoginComponent(new LoginFragmentModule());
+        LoginComponent loginComponent = mActivityCallback.getActivityComponent().plusLoginComponent(new LoginFragmentModule());
         loginComponent.inject(this);
     }
 

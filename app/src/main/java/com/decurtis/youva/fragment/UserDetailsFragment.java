@@ -102,7 +102,7 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserDetailsComponent userDetailsComponent = ((MainActivity) getActivity()).getActivityComponent().plusUserDetailsComponent(new UserDetailsModule());
+        UserDetailsComponent userDetailsComponent = mActivityCallback.getActivityComponent().plusUserDetailsComponent(new UserDetailsModule());
         userDetailsComponent.inject(this);
     }
 
