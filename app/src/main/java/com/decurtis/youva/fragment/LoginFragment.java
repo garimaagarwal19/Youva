@@ -35,8 +35,9 @@ import javax.inject.Inject;
 public class LoginFragment extends Fragment {
     private View mView;
     private LoginCallback mActivityCallback;
-    private GoogleSignInModule googleSignInModule;
 
+    @Inject
+    GoogleSignInModule googleSignInModule;
     @Inject
     DatabaseServiceManager mDatabaseServiceManager;
     @Inject
@@ -63,7 +64,7 @@ public class LoginFragment extends Fragment {
 
         SignInButton mSignInButton = mView.findViewById(R.id.google_button);
 
-        googleSignInModule = new GoogleSignInModule();
+      //  googleSignInModule = new GoogleSignInModule();
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
