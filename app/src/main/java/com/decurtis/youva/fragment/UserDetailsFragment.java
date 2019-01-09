@@ -26,17 +26,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.decurtis.youva.DatabaseServiceManager;
-import com.decurtis.youva.MainActivity;
-import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.UserDetailCallback;
-import com.decurtis.youva.DataEventListener;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
 import com.decurtis.youva.di.component.UserDetailsComponent;
 import com.decurtis.youva.di.module.UserDetailsModule;
 import com.decurtis.youva.model.AppMode;
 import com.decurtis.youva.model.UserDetails;
+import com.decurtis.youva.presenter.UserDetailsPresenter;
+import com.decurtis.youva.view.IView;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
@@ -48,7 +46,7 @@ import javax.inject.Inject;
 /**
  * Created by Garima Chamaria on 25/12/18.
  */
-public class UserDetailsFragment extends Fragment {
+public class UserDetailsFragment extends Fragment implements IView{
     public static final String TAG = UserDetailsFragment.class.getSimpleName();
     private static final String FRAG_TITLE = "User Details";
 
@@ -95,9 +93,10 @@ public class UserDetailsFragment extends Fragment {
     private ArrayList<String> mPersonInterestList;
 
     @Inject
-    SharedPreferenceManager mSharedPreferenceManager;
-    @Inject
-    DatabaseServiceManager mDatabaseServiceManager;
+    UserDetailsPresenter mUserDetailsPresenter;
+
+    private UserDetails mLoggedInAccount;
+    private int appMode;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,6 +117,7 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mUserDetailsPresenter.onAttach(this);
         findAllIDs();
         initializeData();
         setViewItemClickListeners();
@@ -205,17 +205,15 @@ public class UserDetailsFragment extends Fragment {
         individualLatLong = new ArrayList<>(2);
         businessLatLong = new ArrayList<>(2);
 
-        //  UserDetails userDetails = ServiceFactory.getSharedPreferencesManager().getLoggedInAccount();
-        //TODO
-        UserDetails userDetails = mSharedPreferenceManager.getLoggedInAccount();
+        mLoggedInAccount = mUserDetailsPresenter.getLoggedInAccount();
 
-        mUserEmailId.setText(userDetails.getEmail());
+        mUserEmailId.setText(mLoggedInAccount.getEmail());
 
-        String url = userDetails.getImageURL();
+        String url = mLoggedInAccount.getImageURL();
         if (!TextUtils.isEmpty(url))
             Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
 
-        int appMode = mSharedPreferenceManager.getAppMode();
+        appMode = mUserDetailsPresenter.getAppMode();
         if (appMode != AppMode.BUSINESS.getValue()) {
             mBusinessDetailsText.setVisibility(View.GONE);
             mBusinessLayout.setVisibility(View.GONE);
@@ -257,10 +255,7 @@ public class UserDetailsFragment extends Fragment {
             isValidated = false;
         }
 
-        //  if (ServiceFactory.getSharedPreferencesManager().getAppMode() == AppMode.BUSINESS.getValue()) {
-
-        //TODO :
-        if (mSharedPreferenceManager.getAppMode() == AppMode.BUSINESS.getValue()) {
+        if (appMode == AppMode.BUSINESS.getValue()) {
             if (mBusinessNameEdt.getText().toString().length() == 0) {
                 mBusinessNameLayout.setError(resources.getString(R.string.str_error_bName));
                 isValidated = false;
@@ -297,9 +292,9 @@ public class UserDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (validateDetails()) {
-                    saveDataToDatabase();
-                    //TODO :
-                    mSharedPreferenceManager.setIsProfileCreated(true);
+                    UserDetails userDetails = getUserInfo();
+                    mUserDetailsPresenter.saveDataToDatabase(userDetails);
+                    mUserDetailsPresenter.setIsProfileCreated(true);
                     mActivityCallback.openACkFragment();
                 } else
                     Toast.makeText(MainApplication.getContext(), MainApplication.getContext().getResources().getString(R.string.str_error_toast_msg),
@@ -405,32 +400,32 @@ public class UserDetailsFragment extends Fragment {
         }
     };
 
-    private void saveDataToDatabase() {
+    private UserDetails getUserInfo() {
+        UserDetails userDetails = new UserDetails();
+        userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
+        userDetails.setLastname(String.valueOf(mLNameEdt.getText()));
+        userDetails.setPhonenumber(Long.parseLong(String.valueOf(mPhoneEdit.getText())));
 
-        //  ServiceFactory.getDatabaseManager().getLoggedInAccount(ServiceFactory.getSharedPreferencesManager().getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
-        //TODO :
-        mDatabaseServiceManager.getLoggedInAccount(mSharedPreferenceManager.getLoggedInAccount().getKey(), new DataEventListener<UserDetails>() {
-            @Override
-            public void OnSuccess(UserDetails userDetails) {
-                userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
-                userDetails.setLastname(String.valueOf(mLNameEdt.getText()));
-                userDetails.setPhonenumber(Long.parseLong(String.valueOf(mPhoneEdit.getText())));
+        if (mMale.isChecked()) {
+            userDetails.setGender(1);
+        } else {
+            userDetails.setGender(2);
+        }
+        userDetails.setAddress(String.valueOf(mAddressEdt.getText()));
+        userDetails.setIndividuallonglat(individualLatLong);
+        userDetails.setIndividualInterest(mPersonInterestList);
 
-                if (mMale.isChecked()) {
-                    userDetails.setGender(1);
-                } else {
-                    userDetails.setGender(2);
-                }
-                userDetails.setAddress(String.valueOf(mAddressEdt.getText()));
-                userDetails.setIndividuallonglat(individualLatLong);
-                userDetails.setIndividualInterest(mPersonInterestList);
+        userDetails.setBusinessname(String.valueOf(mBusinessNameEdt.getText()));
+        userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
+        userDetails.setBusinesslonglat(businessLatLong);
 
-                userDetails.setBusinessname(String.valueOf(mBusinessNameEdt.getText()));
-                userDetails.setBusinessaddress(String.valueOf(mBusinesssAddressEdt.getText()));
-                userDetails.setBusinesslonglat(businessLatLong);
-                //   ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-                mDatabaseServiceManager.saveUserBasicData(userDetails);
-            }
-        });
+        return userDetails;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUserDetailsPresenter.onDetach();
+        mActivityCallback = null;
     }
 }

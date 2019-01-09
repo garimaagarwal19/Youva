@@ -104,6 +104,7 @@ public class LoginFragment extends Fragment implements IView {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mLoginPresenter.onDetach();
         if (mActivityCallback != null) mActivityCallback = null;
     }
 
