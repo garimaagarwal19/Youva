@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.decurtis.youva.UserDetailCallback;
 import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
@@ -211,7 +212,9 @@ public class UserDetailsFragment extends Fragment implements IView{
 
         String url = mLoggedInAccount.getImageURL();
         if (!TextUtils.isEmpty(url))
-            Glide.with(MainApplication.getContext()).load(url).into(mUserImage);
+            Glide.with(MainApplication.getContext()).load(url).
+                    apply(new RequestOptions().placeholder(R.drawable.individual)).
+                    into(mUserImage);
 
         appMode = mUserDetailsPresenter.getAppMode();
         if (appMode != AppMode.BUSINESS.getValue()) {
