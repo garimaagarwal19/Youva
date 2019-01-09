@@ -41,6 +41,7 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
             public void run() {
                 DatabaseReference databaseReference = mFireBaseDatabaseUserReference.child(userDetails.getKey());
                 Task<Void> task = databaseReference.setValue(userDetails);
+
                 task.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -52,13 +53,13 @@ public class DatabaseServiceManagerImpl implements DatabaseServiceManager {
     }
 
     @Override
-    public void getLoggedInAccount(String accountId, final DataEventListener<UserDetails> eventListener) {
+    public void getLoggedInAccount(final String accountId, final DataEventListener<UserDetails> eventListener) {
         final DatabaseReference ref = mFireBaseDatabaseUserReference.child(accountId);
 
         mThreadExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                ref.addValueEventListener(new ValueEventListener() {
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         UserDetails userDetails = dataSnapshot.getValue(UserDetails.class);

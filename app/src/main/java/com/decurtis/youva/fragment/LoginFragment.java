@@ -11,16 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.GoogleSignInModule;
 import com.decurtis.youva.LoginCallback;
-import com.decurtis.youva.MainActivity;
-import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.R;
-import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.di.component.LoginComponent;
 import com.decurtis.youva.di.module.LoginFragmentModule;
-import com.decurtis.youva.model.UserDetails;
+import com.decurtis.youva.presenter.LoginPresenter;
+import com.decurtis.youva.view.IView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.SignInButton;
@@ -32,16 +29,14 @@ import javax.inject.Inject;
 /**
  * Created by Garima Chamaria on 20/12/18.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements IView {
     private View mView;
     private LoginCallback mActivityCallback;
 
     @Inject
     GoogleSignInModule googleSignInModule;
     @Inject
-    DatabaseServiceManager mDatabaseServiceManager;
-    @Inject
-    SharedPreferenceManager mSharedPreferenceManager;
+    LoginPresenter mLoginPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +57,10 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mLoginPresenter.onAttach(this);
+
         SignInButton mSignInButton = mView.findViewById(R.id.google_button);
 
-      //  googleSignInModule = new GoogleSignInModule();
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +104,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mLoginPresenter.onDetach();
         if (mActivityCallback != null) mActivityCallback = null;
     }
 
@@ -123,16 +120,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setEmail(email);
-        if (photoUrl != null && photoUrl.length() > 0)
-            userDetails.setImageURL(photoUrl);
-        userDetails.setName(fullName);
-        userDetails.setKey(id);
-      //  ServiceFactory.getDatabaseManager().saveUserBasicData(userDetails);
-      //  ServiceFactory.getSharedPreferencesManager().setLoggedInAccount(userDetails);
-
-        mDatabaseServiceManager.saveUserBasicData(userDetails);
-        mSharedPreferenceManager.setLoggedInAccount(userDetails);
+        mLoginPresenter.saveDataToDatabase(fullName, email, photoUrl, id);
     }
 }

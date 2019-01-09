@@ -11,21 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.decurtis.youva.AppConstants;
-import com.decurtis.youva.MainActivity;
-import com.decurtis.youva.MainApplication;
 import com.decurtis.youva.ModeSelectionCallback;
 import com.decurtis.youva.R;
-import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.di.component.ModeSelectionComponent;
 import com.decurtis.youva.di.module.ModeSelectionModule;
 import com.decurtis.youva.model.AppMode;
+import com.decurtis.youva.presenter.ModeSelectionPresenter;
+import com.decurtis.youva.view.IView;
 
 import javax.inject.Inject;
 
 /**
  * Created by Garima Chamaria on 21/12/18.
  */
-public class ModeSelectionFragment extends Fragment {
+public class ModeSelectionFragment extends Fragment implements IView{
 
     private ModeSelectionCallback mActivityCallback;
     private String name;
@@ -33,7 +32,7 @@ public class ModeSelectionFragment extends Fragment {
     private ImageView mBusinessPerson, mIndividual;
 
     @Inject
-    SharedPreferenceManager mSharedPreferenceManager;
+    ModeSelectionPresenter mModeSelectionPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +57,8 @@ public class ModeSelectionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mModeSelectionPresenter.onAttach(this);
 
         String[] substring = name.split(" ");
         mHeading.setText("Hi " + substring[0] + "! " + AppConstants.SELECT_MODE);
@@ -84,14 +85,13 @@ public class ModeSelectionFragment extends Fragment {
     }
 
     private void addUserDetailsFragment(int value) {
-        // ServiceFactory.getSharedPreferencesManager().setAppMode(value);
-
-        mSharedPreferenceManager.setAppMode(value);
+        mModeSelectionPresenter.setAppMode(value);
         mActivityCallback.addUserDetailsFragment();
     }
 
     @Override
     public void onDestroy() {
+        mModeSelectionPresenter.onDetach();
         mActivityCallback.showToolbar(false);
         mActivityCallback = null;
         super.onDestroy();

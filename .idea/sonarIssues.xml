@@ -8,62 +8,7 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/../DXP_Android/dxp_android/ChatLibraryV2/chatlibrary/src/main/java/com/decurtis/chatlibrary/executor/MainThreadImpl.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/../DXP_Android/dxp_android/ChatLibraryV2/chatlibrary/src/main/java/com/decurtis/chatlibrary/executor/impl/ThreadExecutor.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/../Demo/app/src/main/java/com/decurtis/demo/MapsActivity.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/build.gradle">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ACKFragment.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ActivityCallback.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/AppConstant.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/AppConstants.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/AppMode.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/DataEventListener.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/DatabaseServiceManager.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/BasePresenter.java">
           <value>
             <set />
           </value>
@@ -73,67 +18,32 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/LoginFragment.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/di/component/ApplicationComponent.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/MainActivity.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/di/component/LoginComponent.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/MainApplication.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/di/module/LoginFragmentModule.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ModeSelectionCallback.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/di/module/ModeSelectionModule.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ModeSelectionFragment.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/di/module/UserDetailsModule.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ServiceFactory.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/SharedPrefManager.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ThreadExecutor.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/ValueEventListener.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/executor/MainThread.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/executor/MainThreadImpl.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/executor/ThreadExecutor.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/fragment/ACKFragment.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/di/scope/ActivityScope.java">
           <value>
             <set />
           </value>
@@ -153,57 +63,17 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/ic_back.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/presenter/LoginPresenter.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/ack_fragment.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/presenter/ModeSelectionPresenter.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/login_fragment.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/mode_selection_fragment.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/user_details_fragment.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/menu/menu.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="/a.dummy">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/decurtis/youva/presenter/UserDetailsPresenter.java">
           <value>
             <set />
           </value>

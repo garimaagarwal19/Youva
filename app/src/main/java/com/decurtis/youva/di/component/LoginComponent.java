@@ -4,7 +4,6 @@ import com.decurtis.youva.di.module.LoginFragmentModule;
 import com.decurtis.youva.di.scope.FragmentScope;
 import com.decurtis.youva.fragment.LoginFragment;
 
-import dagger.Component;
 import dagger.Subcomponent;
 
 /**
