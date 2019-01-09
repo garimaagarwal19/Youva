@@ -1,8 +1,10 @@
 package com.decurtis.youva.di.module;
 
+import com.decurtis.youva.DatabaseServiceManager;
 import com.decurtis.youva.GoogleSignInModule;
+import com.decurtis.youva.SharedPreferenceManager;
 import com.decurtis.youva.di.scope.FragmentScope;
-import com.decurtis.youva.model.UserDetails;
+import com.decurtis.youva.presenter.LoginPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,5 +20,11 @@ public class LoginFragmentModule {
     @FragmentScope
     GoogleSignInModule provideGoogleSignInModule() {
         return new GoogleSignInModule();
+    }
+
+    @Provides
+    @FragmentScope
+    LoginPresenter provideLoginPresenter(DatabaseServiceManager databaseServiceManager, SharedPreferenceManager sharedPreferenceManager) {
+        return new LoginPresenter(databaseServiceManager, sharedPreferenceManager);
     }
 }

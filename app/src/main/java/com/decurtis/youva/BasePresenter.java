@@ -1,18 +1,18 @@
 package com.decurtis.youva;
 
-import android.view.View;
+import com.decurtis.youva.view.IView;
 
 /**
  * Created by Garima Chamaria on 09/01/19.
  */
 public class BasePresenter {
-    View mView;
+    IView mView;
 
-    public void onAttach(View view) {
+    public void onAttach(IView view) {
         mView = view;
     }
 
-    public View getView() {
+    public IView getView() {
         return mView;
     }
 
