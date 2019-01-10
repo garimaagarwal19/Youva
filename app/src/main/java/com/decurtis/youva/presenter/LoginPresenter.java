@@ -20,6 +20,7 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void saveDataToDatabase(String fullName, String email, String photoUrl, String id) {
+        //TODO:
         UserDetails userDetails = new UserDetails();
         userDetails.setEmail(email);
         if (photoUrl != null && photoUrl.length() > 0)

@@ -3,6 +3,7 @@ package com.decurtis.youva.di.component;
 import com.decurtis.youva.di.module.UserDetailsModule;
 import com.decurtis.youva.di.scope.FragmentScope;
 import com.decurtis.youva.fragment.UserDetailsFragment;
+import com.decurtis.youva.model.UserDetails;
 
 import dagger.Subcomponent;
 
@@ -14,4 +15,6 @@ import dagger.Subcomponent;
 @Subcomponent(modules = UserDetailsModule.class)
 public interface UserDetailsComponent {
     void inject(UserDetailsFragment userDetailsFragment);
+
+    UserDetails getUserDetails();
 }

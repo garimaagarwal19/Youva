@@ -99,11 +99,13 @@ public class UserDetailsFragment extends Fragment implements IView{
     private UserDetails mLoggedInAccount;
     private int appMode;
 
+    private UserDetailsComponent mUserDetailsComponent;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserDetailsComponent userDetailsComponent = mActivityCallback.getActivityComponent().plusUserDetailsComponent(new UserDetailsModule());
-        userDetailsComponent.inject(this);
+        mUserDetailsComponent = mActivityCallback.getActivityComponent().plusUserDetailsComponent(new UserDetailsModule());
+        mUserDetailsComponent.inject(this);
     }
 
     @Nullable
@@ -404,7 +406,7 @@ public class UserDetailsFragment extends Fragment implements IView{
     };
 
     private UserDetails getUserInfo() {
-        UserDetails userDetails = new UserDetails();
+        UserDetails userDetails = mUserDetailsComponent.getUserDetails();
         userDetails.setFirstname(String.valueOf(mFNameEdt.getText()));
         userDetails.setLastname(String.valueOf(mLNameEdt.getText()));
         userDetails.setPhonenumber(Long.parseLong(String.valueOf(mPhoneEdit.getText())));
