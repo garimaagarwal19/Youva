@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:727460680079:android:b29b3a504fd9aa3d",
         "android_client_info": {
-          "package_name": "com.decurtis.youva"
+          "package_name": "com.example.youva"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "727460680079-8ebnnosjpg6rn7tv67ng5c60ns1iiv44.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.decurtis.youva",
+            "package_name": "com.example.youva",
             "certificate_hash": "66ecf590f5b77e895c29726a74ca79efe8638c76"
           }
         },
